@@ -128,7 +128,6 @@ export const Home = (onNavigate) => {
   // Create the "Register here" link
   const registerLink = document.createElement('a');
   registerLink.textContent = 'Regístrate aquí';
-  // registerLink.className = 'register-button';
   registerLink.addEventListener('click', () => onNavigate('/register'));
 
   // Create the login button container

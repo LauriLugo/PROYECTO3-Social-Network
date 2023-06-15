@@ -18,8 +18,6 @@ export const onNavigate = (pathname) => {
     window.location.origin + pathname,
   );
 
-  // console.log('rootDiv >> ', )
-
   if (rootDiv.firstChild) {
     rootDiv.removeChild(rootDiv.firstChild);
   }

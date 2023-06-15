@@ -1,15 +1,6 @@
 const rootDiv = document.getElementById('root');
 
 export const Register = (onNavigate) => {
-  const HomeDiv = document.createElement('div');
-  // HomeDiv.textContent = 'Bienvenida al Login';
-  HomeDiv.classList.add('register');
-  // buttonHome.textContent = 'Regresar al Home';
-  const buttonHome = document.createElement('button');
-  // const registerView = document.createElement('div');
-
-  buttonHome.addEventListener('click', () => onNavigate('/register'));
-
   // create the main wrapper that includes the logo and the container
   // for the introductory text and the form
   const mainWrapper = document.createElement('div');
@@ -25,11 +16,20 @@ export const Register = (onNavigate) => {
   logoImage.alt = 'Nanai logo';
 
   // Append the logo image to the logo container and then to the main
-  mainWrapper.appendChild(logoImage);
+  logoContainer.appendChild(logoImage);
+  mainWrapper.appendChild(logoContainer);
 
   // Create the login form
   const loginForm = document.createElement('form');
   loginForm.className = 'login-section';
+
+  // Create "Home" button
+  const buttonHome = document.createElement('a');
+  buttonHome.className = 'home-button';
+  buttonHome.textContent = 'Volver';
+  buttonHome.addEventListener('click', () => onNavigate('/'));
+
+  loginForm.appendChild(buttonHome);
 
   // Create the login heading
   const loginHeading = document.createElement('h2');
@@ -89,8 +89,6 @@ export const Register = (onNavigate) => {
 
   // Append the mainSection to the mainWrapper
   mainWrapper.appendChild(mainSection);
-
-  // HomeDiv.appendChild(registerView);
 
   rootDiv.appendChild(mainWrapper);
 };
