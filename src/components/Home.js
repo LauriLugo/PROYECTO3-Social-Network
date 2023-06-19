@@ -1,5 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import logoSrc from '../media/logo.png';
+import disclaimerSrc from '../media/disclaimer.png';
+import googleSrc from '../media/Google-icon.png';
 
 const rootDiv = document.getElementById('root');
 
@@ -33,7 +36,7 @@ export const Home = (onNavigate) => {
 
   // Create the logo image
   const logoImage = document.createElement('img');
-  logoImage.src = '/media/logo.png';
+  logoImage.src = logoSrc;
   logoImage.alt = 'Nanai logo';
 
   // Append the logo image to the logo container
@@ -52,7 +55,7 @@ export const Home = (onNavigate) => {
 
   // Create the paragraphs
   const paragraph1 = document.createElement('p');
-  paragraph1.textContent = 'Aquí encontrarás un espacio seguro y acogedor para conectarte con personas que comparten tus mismas inquietudes.';
+  paragraph1.textContent = 'Here encontrarás un espacio seguro y acogedor para conectarte con personas que comparten tus mismas inquietudes.';
 
   const paragraph2 = document.createElement('p');
   paragraph2.textContent = 'Juntos, exploraremos caminos hacia la salud mental y emocional, brindándonos apoyo mutuo y compartiendo herramientas poderosas.';
@@ -66,7 +69,7 @@ export const Home = (onNavigate) => {
 
   // Create the disclaimer image
   const disclaimerImage = document.createElement('img');
-  disclaimerImage.src = '/media/disclaimer.png';
+  disclaimerImage.src = disclaimerSrc;
   disclaimerImage.alt = 'Importante';
 
   // Append the disclaimer image to the disclaimer container
@@ -140,7 +143,7 @@ export const Home = (onNavigate) => {
 
   // Create the Google icon image
   const googleIcon = document.createElement('img');
-  googleIcon.src = '/media/Google-icon.png';
+  googleIcon.src = googleSrc;
   googleIcon.alt = 'Google icon';
   googleButton.appendChild(googleIcon);
   googleButton.innerHTML += 'Continúa con Google';
