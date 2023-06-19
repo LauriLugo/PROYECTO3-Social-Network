@@ -1,3 +1,7 @@
+import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+
+const auth = getAuth();
+
 const rootDiv = document.getElementById('root');
 
 export const Register = (onNavigate) => {
@@ -52,7 +56,22 @@ export const Register = (onNavigate) => {
   nextButton.href = '';
   nextButton.className = 'continue';
   nextButton.textContent = 'Siguiente';
-
+  nextButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        onNavigate('/');
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // ..
+      });
+  });
   // Create the Google button
   const googleButton = document.createElement('button');
   googleButton.className = 'google-button';
@@ -63,6 +82,33 @@ export const Register = (onNavigate) => {
   googleIcon.alt = 'Google icon';
   googleButton.appendChild(googleIcon);
   googleButton.innerHTML += 'Continúa con Google';
+  googleButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+        console.log(user, token);
+        onNavigate('/');
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(errorCode, errorMessage, email, credential);
+        // ...
+      });
+  });
+
 
   // Append the email input, password input, "Forgot your password?" link,
   // "Next" button, and Google button to the login form

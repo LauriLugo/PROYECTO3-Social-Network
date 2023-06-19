@@ -1,4 +1,21 @@
+import { initializeApp } from 'firebase/app';
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+
 const rootDiv = document.getElementById('root');
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: 'AIzaSyAF2gJx3-nMb9WaoJd82xBfmmtU0neZ2UA',
+  authDomain: 'nanaisocialnetwork.firebaseapp.com',
+  databaseURL: 'https://nanaisocialnetwork-default-rtdb.firebaseio.com',
+  projectId: 'nanaisocialnetwork',
+  storageBucket: 'nanaisocialnetwork.appspot.com',
+  messagingSenderId: '117090233074',
+  appId: '1:117090233074:web:1e82a71a00e02fdce8be6b',
+};
+
+const app = initializeApp(firebaseConfig);
+
 
 export const Home = (onNavigate) => {
   const buttonLogin = document.createElement('button');
@@ -100,6 +117,22 @@ export const Home = (onNavigate) => {
   nextButton.className = 'continue';
   // nextButton.onclick = routes;
   nextButton.textContent = 'Siguiente';
+  nextButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        onNavigate('/wall');
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  });
 
   // Create the Google button
   const googleButton = document.createElement('button');
@@ -111,6 +144,33 @@ export const Home = (onNavigate) => {
   googleIcon.alt = 'Google icon';
   googleButton.appendChild(googleIcon);
   googleButton.innerHTML += 'Continúa con Google';
+  googleButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+        console.log(user, token);
+        onNavigate('/wall');
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(errorCode, errorMessage, email, credential);
+        // ...
+      });
+  });
 
   // Append the email input, password input, "Forgot your password?" link,
   // "Next" button, and Google button to the login form
