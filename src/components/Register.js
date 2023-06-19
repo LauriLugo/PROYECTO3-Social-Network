@@ -1,4 +1,6 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import logoSrc from '../media/logo.png';
+import googleSrc from '../media/Google-icon.png';
 
 const auth = getAuth();
 
@@ -16,7 +18,7 @@ export const Register = (onNavigate) => {
 
   // Create the logo image
   const logoImage = document.createElement('img');
-  logoImage.src = '/media/logo.png';
+  logoImage.src = logoSrc;
   logoImage.alt = 'Nanai logo';
 
   // Append the logo image to the logo container and then to the main
@@ -78,7 +80,7 @@ export const Register = (onNavigate) => {
 
   // Create the Google icon image
   const googleIcon = document.createElement('img');
-  googleIcon.src = '/media/Google-icon.png';
+  googleIcon.src = googleSrc;
   googleIcon.alt = 'Google icon';
   googleButton.appendChild(googleIcon);
   googleButton.innerHTML += 'Continúa con Google';
