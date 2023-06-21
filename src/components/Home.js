@@ -16,7 +16,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-
 export const Home = (onNavigate) => {
   const buttonLogin = document.createElement('button');
   buttonLogin.textContent = 'Inicia sesión';
