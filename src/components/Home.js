@@ -1,23 +1,11 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import logoSrc from '../media/logo.png';
 import disclaimerSrc from '../media/disclaimer.png';
 import googleSrc from '../media/Google-icon.png';
+import { crearUsuario } from '../lib';
 
 const rootDiv = document.getElementById('root');
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: 'AIzaSyAF2gJx3-nMb9WaoJd82xBfmmtU0neZ2UA',
-  authDomain: 'nanaisocialnetwork.firebaseapp.com',
-  databaseURL: 'https://nanaisocialnetwork-default-rtdb.firebaseio.com',
-  projectId: 'nanaisocialnetwork',
-  storageBucket: 'nanaisocialnetwork.appspot.com',
-  messagingSenderId: '117090233074',
-  appId: '1:117090233074:web:1e82a71a00e02fdce8be6b',
-};
-
-const app = initializeApp(firebaseConfig);
 
 
 export const Home = (onNavigate) => {
@@ -122,8 +110,7 @@ export const Home = (onNavigate) => {
   nextButton.textContent = 'Siguiente';
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+    crearUsuario(emailInput.value, passwordInput.value)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
