@@ -1,5 +1,5 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { initializeApp } from 'firebase/app'; // 
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword} from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAF2gJx3-nMb9WaoJd82xBfmmtU0neZ2UA',
@@ -13,5 +13,15 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+const provider = new GoogleAuthProvider();
 
-export const crearUsuario = (email, contraseña) => signInWithEmailAndPassword(auth, email,contraseña);
+export function crearUsuarioConCorreoYContraseña(email, contraseña) {
+  return createUserWithEmailAndPassword(auth, email, contraseña);
+}
+export function iniciaSesionConCorreoYContraseña(email, contraseña) {
+  return signInWithEmailAndPassword(auth, email, contraseña);
+}
+
+export function iniciaSesionConPopup() {
+  return signInWithPopup(auth, provider);
+}

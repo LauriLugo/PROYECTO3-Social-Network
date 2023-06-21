@@ -1,7 +1,7 @@
 import logoSrc from '../media/logo.png';
 import disclaimerSrc from '../media/disclaimer.png';
 import googleSrc from '../media/Google-icon.png';
-import { crearUsuario } from '../lib';
+import { iniciaSesionConCorreoYContraseña, iniciaSesionConPopup } from '../lib';
 
 const rootDiv = document.getElementById('root');
 
@@ -110,7 +110,7 @@ export const Home = (onNavigate) => {
   nextButton.textContent = 'Siguiente';
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
-    crearUsuario(emailInput.value, passwordInput.value)
+    iniciaSesionConCorreoYContraseña(emailInput.value, passwordInput.value)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -136,18 +136,16 @@ export const Home = (onNavigate) => {
   googleButton.innerHTML += 'Continúa con Google';
   googleButton.addEventListener('click', (e) => {
     e.preventDefault();
-    const provider = new GoogleAuthProvider();
-    const auth = getAuth();
-    signInWithPopup(auth, provider)
+    iniciaSesionConPopup()
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
+        // // The signed-in user info.
+        // const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-        console.log(user, token);
+        console.log(result);
         onNavigate('/wall');
       }).catch((error) => {
         // Handle Errors here.
