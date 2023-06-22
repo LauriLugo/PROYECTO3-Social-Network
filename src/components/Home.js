@@ -1,23 +1,11 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import logoSrc from '../media/logo.png';
 import disclaimerSrc from '../media/disclaimer.png';
-import googleSrc from '../media/Google-icon.png';
+import googleSrc from '../media/btn_google_signin_light_focus_web 2@2x.png';
+import { iniciaSesionConCorreoYContraseña, iniciaSesionConPopup } from '../lib';
 
 const rootDiv = document.getElementById('root');
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: 'AIzaSyAF2gJx3-nMb9WaoJd82xBfmmtU0neZ2UA',
-  authDomain: 'nanaisocialnetwork.firebaseapp.com',
-  databaseURL: 'https://nanaisocialnetwork-default-rtdb.firebaseio.com',
-  projectId: 'nanaisocialnetwork',
-  storageBucket: 'nanaisocialnetwork.appspot.com',
-  messagingSenderId: '117090233074',
-  appId: '1:117090233074:web:1e82a71a00e02fdce8be6b',
-};
-
-const app = initializeApp(firebaseConfig);
 
 export const Home = (onNavigate) => {
   const buttonLogin = document.createElement('button');
@@ -121,8 +109,7 @@ export const Home = (onNavigate) => {
   nextButton.textContent = 'Siguiente';
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+    iniciaSesionConCorreoYContraseña(emailInput.value, passwordInput.value)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -145,21 +132,18 @@ export const Home = (onNavigate) => {
   googleIcon.src = googleSrc;
   googleIcon.alt = 'Google icon';
   googleButton.appendChild(googleIcon);
-  googleButton.innerHTML += 'Continúa con Google';
   googleButton.addEventListener('click', (e) => {
     e.preventDefault();
-    const provider = new GoogleAuthProvider();
-    const auth = getAuth();
-    signInWithPopup(auth, provider)
+    iniciaSesionConPopup()
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
+        // // The signed-in user info.
+        // const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-        console.log(user, token);
+        console.log(result);
         onNavigate('/wall');
       }).catch((error) => {
         // Handle Errors here.

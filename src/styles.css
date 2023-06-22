@@ -172,7 +172,7 @@ input{
   justify-content: center;
   width: 100%;
   padding: 1rem 1.5rem;
-  background-color: #FFFFFF;
+  background-color: transparent;
   border-color: transparent;
   gap: 1rem;
   font-family: system-ui;

@@ -1,8 +1,6 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import logoSrc from '../media/logo.png';
-import googleSrc from '../media/Google-icon.png';
-
-const auth = getAuth();
+import googleSrc from '../media/btn_google_signin_light_focus_web 2@2x.png';
+import { iniciaSesionConPopup, crearUsuarioConCorreoYContraseña} from '../lib';
 
 const rootDiv = document.getElementById('root');
 
@@ -60,7 +58,7 @@ export const Register = (onNavigate) => {
   nextButton.textContent = 'Siguiente';
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
-    createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+    crearUsuarioConCorreoYContraseña(emailInput.value, passwordInput.value)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -83,21 +81,19 @@ export const Register = (onNavigate) => {
   googleIcon.src = googleSrc;
   googleIcon.alt = 'Google icon';
   googleButton.appendChild(googleIcon);
-  googleButton.innerHTML += 'Continúa con Google';
   googleButton.addEventListener('click', (e) => {
     e.preventDefault();
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
+    iniciaSesionConPopup()
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
         // The signed-in user info.
-        const user = result.user;
+        // const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-        console.log(user, token);
-        onNavigate('/');
+        console.log(result);
+        onNavigate('/wall');
       }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
@@ -105,8 +101,8 @@ export const Register = (onNavigate) => {
         // The email of the user's account used.
         const email = error.customData.email;
         // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(errorCode, errorMessage, email, credential);
+        // const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(errorCode, errorMessage, email);
         // ...
       });
   });
