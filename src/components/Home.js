@@ -1,6 +1,6 @@
 import logoSrc from '../media/logo.png';
 import disclaimerSrc from '../media/disclaimer.png';
-import googleSrc from '../media/Google-icon.png';
+import googleSrc from '../media/btn_google_signin_light_focus_web 2@2x.png';
 import { iniciaSesionConCorreoYContraseña, iniciaSesionConPopup } from '../lib';
 
 const rootDiv = document.getElementById('root');
@@ -133,7 +133,6 @@ export const Home = (onNavigate) => {
   googleIcon.src = googleSrc;
   googleIcon.alt = 'Google icon';
   googleButton.appendChild(googleIcon);
-  googleButton.innerHTML += 'Continúa con Google';
   googleButton.addEventListener('click', (e) => {
     e.preventDefault();
     iniciaSesionConPopup()

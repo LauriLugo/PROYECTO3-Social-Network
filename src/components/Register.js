@@ -1,5 +1,5 @@
 import logoSrc from '../media/logo.png';
-import googleSrc from '../media/Google-icon.png';
+import googleSrc from '../media/btn_google_signin_light_focus_web 2@2x.png';
 import { iniciaSesionConPopup, crearUsuarioConCorreoYContraseña} from '../lib';
 
 const rootDiv = document.getElementById('root');
@@ -81,7 +81,6 @@ export const Register = (onNavigate) => {
   googleIcon.src = googleSrc;
   googleIcon.alt = 'Google icon';
   googleButton.appendChild(googleIcon);
-  googleButton.innerHTML += 'Continúa con Google';
   googleButton.addEventListener('click', (e) => {
     e.preventDefault();
     iniciaSesionConPopup()
@@ -94,7 +93,7 @@ export const Register = (onNavigate) => {
         // IdP data available using getAdditionalUserInfo(result)
         // ...
         console.log(result);
-        onNavigate('/');
+        onNavigate('/wall');
       }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
