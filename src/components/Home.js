@@ -1,9 +1,6 @@
 import logoSrc from '../media/logo.png';
 import disclaimerSrc from '../media/disclaimer.png';
-import googleSrc from '../media/btn_google_signin_light_focus_web 2@2x.png';
 import { iniciaSesionConCorreoYContraseña, iniciaSesionConPopup } from '../lib';
-
-const rootDiv = document.getElementById('root');
 
 // Your web app's Firebase configuration
 
@@ -29,12 +26,12 @@ export const Home = (onNavigate) => {
   // Append the logo image to the logo container
   logoContainer.appendChild(logoImage);
 
-  // Append the logo container to the main wrapper
-  mainWrapper.appendChild(logoContainer);
-
   // Create the introductory container
   const introContainer = document.createElement('div');
   introContainer.className = 'introductory-container';
+
+  const DisclaimerWrapper = document.createElement('div');
+  DisclaimerWrapper.className = 'disclaimer-wrapper';
 
   // Create the heading
   const heading = document.createElement('h2');
@@ -42,7 +39,7 @@ export const Home = (onNavigate) => {
 
   // Create the paragraphs
   const paragraph1 = document.createElement('p');
-  paragraph1.textContent = 'Here encontrarás un espacio seguro y acogedor para conectarte con personas que comparten tus mismas inquietudes.';
+  paragraph1.textContent = 'Aquí encontrarás un espacio seguro y acogedor para conectarte con personas que comparten tus mismas inquietudes.';
 
   const paragraph2 = document.createElement('p');
   paragraph2.textContent = 'Juntos, exploraremos caminos hacia la salud mental y emocional, brindándonos apoyo mutuo y compartiendo herramientas poderosas.';
@@ -68,12 +65,15 @@ export const Home = (onNavigate) => {
 
   // Append the heading, paragraphs, disclaimer container,
   // and disclaimer paragraph to the introductory container
-  introContainer.appendChild(heading);
-  introContainer.appendChild(paragraph1);
-  introContainer.appendChild(paragraph2);
-  introContainer.appendChild(paragraph3);
-  introContainer.appendChild(disclaimerContainer);
-  introContainer.appendChild(disclaimerParagraph);
+  DisclaimerWrapper.appendChild(heading);
+  DisclaimerWrapper.appendChild(paragraph1);
+  DisclaimerWrapper.appendChild(paragraph2);
+  DisclaimerWrapper.appendChild(paragraph3);
+  DisclaimerWrapper.appendChild(disclaimerContainer);
+  DisclaimerWrapper.appendChild(disclaimerParagraph);
+
+  introContainer.appendChild(logoContainer);
+  introContainer.appendChild(DisclaimerWrapper);
 
   // Create the login form
   const loginForm = document.createElement('form');
@@ -110,27 +110,38 @@ export const Home = (onNavigate) => {
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
     iniciaSesionConCorreoYContraseña(emailInput.value, passwordInput.value)
-      .then((userCredential) => {
+      .then(() => {
         // Signed in
-        const user = userCredential.user;
+        // const user = userCredential.user;
         onNavigate('/wall');
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+        console.log(errorCode, errorMessage, 'error custom');
       });
   });
+
+  // Create google container, that way we can center the button
+  const googleContainer = document.createElement('div');
+  googleContainer.className = 'google-container';
+
+  // Create text before googleButton
+  // const googleText = document.createElement('p');
+  // googleText.className = 'google-text';
+  // googleText.innerText = 'O también puedes';
 
   // Create the Google button
   const googleButton = document.createElement('button');
   googleButton.className = 'google-button';
+  googleButton.innerHTML = 'Acceder con Google';
 
   // Create the Google icon image
   const googleIcon = document.createElement('img');
-  googleIcon.src = googleSrc;
+  googleIcon.src = '/media/google.svg';
   googleIcon.alt = 'Google icon';
+  googleIcon.className = 'google-icon';
   googleButton.appendChild(googleIcon);
   googleButton.addEventListener('click', (e) => {
     e.preventDefault();
@@ -139,9 +150,6 @@ export const Home = (onNavigate) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         // const credential = GoogleAuthProvider.credentialFromResult(result);
         // const token = credential.accessToken;
-        // // The signed-in user info.
-        // const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
         // ...
         console.log(result);
         onNavigate('/wall');
@@ -157,6 +165,8 @@ export const Home = (onNavigate) => {
         // ...
       });
   });
+  // googleContainer.appendChild(googleText);
+  googleContainer.appendChild(googleButton);
 
   // Append the email input, password input, "Forgot your password?" link,
   // "Next" button, and Google button to the login form
@@ -165,7 +175,7 @@ export const Home = (onNavigate) => {
   loginForm.appendChild(passwordInput);
   loginForm.appendChild(forgotPasswordLink);
   loginForm.appendChild(nextButton);
-  loginForm.appendChild(googleButton);
+  loginForm.appendChild(googleContainer);
 
   // Create the "Don't have an account?" paragraph
   const accountParagraph = document.createElement('p');
@@ -189,13 +199,13 @@ export const Home = (onNavigate) => {
   const mainSection = document.createElement('main');
 
   // login form, and login button container to the main section
-  mainSection.appendChild(introContainer);
   mainSection.appendChild(loginForm);
   mainSection.appendChild(loginButtonContainer);
 
+  mainWrapper.appendChild(introContainer);
   mainWrapper.appendChild(mainSection);
 
   // Append the main section to the document body
 
-  rootDiv.appendChild(mainWrapper);
+  return mainWrapper;
 };

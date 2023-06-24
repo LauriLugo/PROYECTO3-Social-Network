@@ -1,8 +1,5 @@
 import logoSrc from '../media/logo.png';
-import googleSrc from '../media/btn_google_signin_light_focus_web 2@2x.png';
-import { iniciaSesionConPopup, crearUsuarioConCorreoYContraseña} from '../lib';
-
-const rootDiv = document.getElementById('root');
+import { iniciaSesionConPopup, crearUsuarioConCorreoYContraseña } from '../lib';
 
 export const Register = (onNavigate) => {
   // create the main wrapper that includes the logo and the container
@@ -59,10 +56,10 @@ export const Register = (onNavigate) => {
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
     crearUsuarioConCorreoYContraseña(emailInput.value, passwordInput.value)
-      .then((userCredential) => {
+      .then(() => {
         // Signed in
-        const user = userCredential.user;
-        onNavigate('/');
+        // const user = userCredential.user;
+        onNavigate('/wall');
         // ...
       })
       .catch((error) => {
@@ -72,14 +69,21 @@ export const Register = (onNavigate) => {
         // ..
       });
   });
+
+  // Create the google button container, that way we can center the button
+  const googleContainer = document.createElement('div');
+  googleContainer.className = 'google-container';
+
   // Create the Google button
   const googleButton = document.createElement('button');
   googleButton.className = 'google-button';
+  googleButton.innerHTML = 'Acceder con Google';
 
   // Create the Google icon image
   const googleIcon = document.createElement('img');
-  googleIcon.src = googleSrc;
+  googleIcon.src = '/media/google.svg';
   googleIcon.alt = 'Google icon';
+  googleIcon.className = 'google-icon';
   googleButton.appendChild(googleIcon);
   googleButton.addEventListener('click', (e) => {
     e.preventDefault();
@@ -107,6 +111,7 @@ export const Register = (onNavigate) => {
       });
   });
 
+  googleContainer.appendChild(googleButton);
 
   // Append the email input, password input, "Forgot your password?" link,
   // "Next" button, and Google button to the login form
@@ -114,11 +119,7 @@ export const Register = (onNavigate) => {
   loginForm.appendChild(emailInput);
   loginForm.appendChild(passwordInput);
   loginForm.appendChild(nextButton);
-  loginForm.appendChild(googleButton);
-
-  // Create the login button container
-  const loginButtonContainer = document.createElement('div');
-  loginButtonContainer.className = 'login-button';
+  loginForm.appendChild(googleContainer);
 
   // Append the logo container, introductory container,
   const mainSection = document.createElement('main');
@@ -126,7 +127,7 @@ export const Register = (onNavigate) => {
 
   // login form, and login button container to the main section
   mainSection.appendChild(loginForm);
-  mainSection.appendChild(loginButtonContainer);
+  // mainSection.appendChild(loginButtonContainer);
 
   // Append loginForm to the main section
   mainSection.appendChild(loginForm);
@@ -134,5 +135,5 @@ export const Register = (onNavigate) => {
   // Append the mainSection to the mainWrapper
   mainWrapper.appendChild(mainSection);
 
-  rootDiv.appendChild(mainWrapper);
+  return mainWrapper;
 };
