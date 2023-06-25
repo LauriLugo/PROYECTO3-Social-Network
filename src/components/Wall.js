@@ -38,5 +38,5 @@ export const Wall = (onNavigate) => {
 
   wrapper.appendChild(formPost);
 
-  rootDiv.appendChild(wrapper);
+  return wrapper;
 };
