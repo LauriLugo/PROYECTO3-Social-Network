@@ -45,7 +45,8 @@ export const Register = (onNavigate) => {
 
   // Create the password input
   const passwordInput = document.createElement('input');
-  passwordInput.type = 'current-password';
+  passwordInput.id = 'pass';
+  passwordInput.type = 'password';
   passwordInput.placeholder = 'Contraseña';
 
   // Create the "Next" button
@@ -56,16 +57,19 @@ export const Register = (onNavigate) => {
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
     crearUsuarioConCorreoYContraseña(emailInput.value, passwordInput.value)
-      .then(() => {
+      .then((userCredential) => {
         // Signed in
-        // const user = userCredential.user;
-        onNavigate('/wall');
+        const user = userCredential.user;
+        onNavigate('/');
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
+        if (errorCode === 'auth/invalid-email') alert('Correo incorrecto');
+        if (errorCode === 'auth/missing-password') alert('Escribe tu contraseña');
+        if (errorCode === 'auth/weak-password') alert('La contraseña debe tener al menos 6 caracteres');
         // ..
       });
   });

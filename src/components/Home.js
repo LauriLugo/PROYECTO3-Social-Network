@@ -92,7 +92,7 @@ export const Home = (onNavigate) => {
 
   // Create the password input
   const passwordInput = document.createElement('input');
-  passwordInput.type = 'current-password';
+  passwordInput.type = 'password';
   passwordInput.placeholder = 'Contraseña';
 
   // Create the "Forgot your password?" link
@@ -110,7 +110,7 @@ export const Home = (onNavigate) => {
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
     iniciaSesionConCorreoYContraseña(emailInput.value, passwordInput.value)
-      .then(() => {
+      .then((userCredential) => {
         // Signed in
         // const user = userCredential.user;
         onNavigate('/wall');
@@ -120,6 +120,10 @@ export const Home = (onNavigate) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage, 'error custom');
+        if (errorCode === 'auth/invalid-email') alert('Correo incorrecto');
+        if (errorCode === 'auth/missing-password') alert('Escribe tu contraseña');
+        if (errorCode === 'auth/wrong-password') alert('Contraseña incorrecta');
+        if (errorCode === 'auth/user-not-found') alert('Usuario no registrado');
       });
   });
 
