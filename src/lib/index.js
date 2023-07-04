@@ -1,5 +1,17 @@
 import { initializeApp } from 'firebase/app'; //
-import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword} from 'firebase/auth';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+} from 'firebase/auth';
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+} from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAF2gJx3-nMb9WaoJd82xBfmmtU0neZ2UA',
@@ -14,6 +26,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
+const db = getFirestore(app);
 
 export function crearUsuarioConCorreoYContraseña(email, contraseña) {
   return createUserWithEmailAndPassword(auth, email, contraseña);
@@ -25,3 +38,11 @@ export function iniciaSesionConCorreoYContraseña(email, contraseña) {
 export function iniciaSesionConPopup() {
   return signInWithPopup(auth, provider);
 }
+
+export function createPost(post) {
+  return addDoc(collection(db, 'posts'), {
+    publication: post,
+  });
+}
+
+console.log(app);

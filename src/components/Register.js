@@ -62,6 +62,7 @@ export const Register = (onNavigate) => {
         const user = userCredential.user;
         onNavigate('/');
         // ...
+        console.log(user);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -94,12 +95,6 @@ export const Register = (onNavigate) => {
     iniciaSesionConPopup()
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        // const credential = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential.accessToken;
-        // The signed-in user info.
-        // const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
         console.log(result);
         onNavigate('/wall');
       }).catch((error) => {
@@ -109,7 +104,6 @@ export const Register = (onNavigate) => {
         // The email of the user's account used.
         const email = error.customData.email;
         // The AuthCredential type that was used.
-        // const credential = GoogleAuthProvider.credentialFromError(error);
         console.log(errorCode, errorMessage, email);
         // ...
       });

@@ -1,8 +1,6 @@
-
-
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
+/* http://meyerweb.com/eric/tools/css/reset/
+  v2.0 | 20110126
+  License: none (public domain)
 */
 
 html, body, div, span, applet, object, iframe,
@@ -21,8 +19,8 @@ time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	font-size: 100%;
 	font: inherit;
+	font-size: 100%;
 	vertical-align: baseline;
   text-decoration: none;
 }
@@ -52,7 +50,7 @@ table {
 
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&family=Noto+Sans:wght@500&family=Roboto&display=swap');
+
 body {
   background-color: #F6E7E6;
   font-family: 'Baloo Da 2', cursive, system-ui;
@@ -152,7 +150,7 @@ h2{
 input{
   background-color: transparent;
   border: none;
-  color: #C4BCBD;
+  color: #514d4e;
   border-bottom: 1px solid #A39A9A;
   height: 40px;
   width: 100%;
@@ -188,9 +186,8 @@ input{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* padding: 4rem 0 0 0; */
-  gap: 1rem;
   color: #817C7C;
+  gap: 1rem;
 }
 
 .google-button{
@@ -248,8 +245,8 @@ footer > p {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     gap: 4rem;
+    height: 100vh;
   }
 
   .disclaimer-wrapper{
@@ -267,9 +264,9 @@ footer > p {
 
   .register-wrapper{
     flex-direction: row;
-    height: 100vh;
     align-items: center;
     justify-content: center;
+    height: 100vh;
   }
 
   .home-button{
@@ -293,5 +290,4 @@ footer > p {
     background-color: #4285F4;
     color: #FFFFFF;
   }
-
 }
