@@ -11,6 +11,7 @@ import {
   getFirestore,
   collection,
   addDoc,
+  // getDocs,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -39,10 +40,37 @@ export function iniciaSesionConPopup() {
   return signInWithPopup(auth, provider);
 }
 
-export function createPost(post) {
-  return addDoc(collection(db, 'posts'), {
-    publication: post,
-  });
-}
+export const createPost = (post) => addDoc(collection(db, 'posts'), {
+  publication: post,
+});
+
+// const querySnapshot = await getDocs(collection(db, "post"));
+// querySnapshot.forEach((doc) => {
+//   console.log(`${doc.id} => ${doc.data()}`);
+// });
+
+// export function rederPost() {
+//   getDocs(collection(db, 'posts')).then((querySnapshot) => {
+//     if (querySnapshot.empty) {
+//       console.log('No hay documentos');
+//       return;
+//     }
+//     console.log(`Número de documentos: ${querySnapshot.size}`);
+//     querySnapshot.forEach((doc) => {
+//       const postId = doc.id;
+//       const post = doc.data().publication;
+//       console.log(`ID: ${postId}, Publicación: ${post}`);
+//     });
+//   });
+// }
+
+// try {
+//   const docRef = await addDoc(collection(db, "posts"), {
+//     publication: post,
+//   });
+//   console.log("Document written with ID: ", docRef.id);
+// } catch (e) {
+//   console.error("Error adding document: ", e);
+// }
 
 console.log(app);
