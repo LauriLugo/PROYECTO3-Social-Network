@@ -1,6 +1,7 @@
+import { GoogleAuthProvider } from 'firebase/auth';
+import { iniciaSesionConCorreoYContraseña, iniciaSesionConPopup } from '../lib';
 import logoSrc from '../media/logo.png';
 import disclaimerSrc from '../media/disclaimer.png';
-import { iniciaSesionConCorreoYContraseña, iniciaSesionConPopup } from '../lib';
 
 // Your web app's Firebase configuration
 
@@ -115,6 +116,7 @@ export const Home = (onNavigate) => {
         // const user = userCredential.user;
         onNavigate('/wall');
         // ...
+        console.log(userCredential);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -130,11 +132,6 @@ export const Home = (onNavigate) => {
   // Create google container, that way we can center the button
   const googleContainer = document.createElement('div');
   googleContainer.className = 'google-container';
-
-  // Create text before googleButton
-  // const googleText = document.createElement('p');
-  // googleText.className = 'google-text';
-  // googleText.innerText = 'O también puedes';
 
   // Create the Google button
   const googleButton = document.createElement('button');
@@ -152,9 +149,6 @@ export const Home = (onNavigate) => {
     iniciaSesionConPopup()
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        // const credential = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential.accessToken;
-        // ...
         console.log(result);
         onNavigate('/wall');
       }).catch((error) => {
@@ -210,6 +204,5 @@ export const Home = (onNavigate) => {
   mainWrapper.appendChild(mainSection);
 
   // Append the main section to the document body
-
   return mainWrapper;
 };

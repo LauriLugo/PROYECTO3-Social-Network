@@ -1,5 +1,3 @@
-const rootDiv = document.getElementById('root');
-
 export const Wall = (onNavigate) => {
   const HomeDiv = document.createElement('div');
   const buttonLogin = document.createElement('button');
