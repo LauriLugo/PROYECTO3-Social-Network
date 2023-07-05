@@ -1,7 +1,7 @@
 import homeSrc from '../media/home-icon.svg';
 import profileSrc from '../media/profile-icon.svg';
 import communitiesSrc from '../media/communities-icon.svg';
-import { createPost, getPosts, deletePost, updatePost, likePost } from '../lib';
+import { createPost, getPosts, deletePost, updatePost, likePost, emailUsuario } from '../lib';
 
 export const Wall = (onNavigate) => {
   const HomeDiv = document.createElement('div');
@@ -113,7 +113,7 @@ export const Wall = (onNavigate) => {
       postText.disabled = true;
 
       const buttonLike = document.createElement('button');
-      buttonLike.textContent = `${post.likes} Like`;
+      buttonLike.textContent = `${post.likes.length} Like`;
       buttonLike.addEventListener('click', () => {
         likePost(post.id, post.likes).then(() => {
           onNavigate('/wall');
