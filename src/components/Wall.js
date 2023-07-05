@@ -1,7 +1,18 @@
 import homeSrc from '../media/home-icon.svg';
 import profileSrc from '../media/profile-icon.svg';
 import communitiesSrc from '../media/communities-icon.svg';
-import { createPost, getPosts, deletePost, updatePost, likePost, emailUsuario } from '../lib';
+import editIcon from '../media/edit-icon.svg';
+import likeIcon from '../media/like-icon.svg';
+import deleteIcon from '../media/delete-icon.svg';
+
+import {
+  createPost,
+  getPosts,
+  deletePost,
+  updatePost,
+  likePost,
+  // emailUsuario,
+} from '../lib';
 
 export const Wall = (onNavigate) => {
   const HomeDiv = document.createElement('div');
@@ -91,6 +102,9 @@ export const Wall = (onNavigate) => {
   wrapper.appendChild(formPost);
   wrapper.appendChild(navBar);
 
+  const buttonsWrapper = document.createElement('div');
+  buttonsWrapper.className = 'buttons-wrapper';
+
   getPosts().then((posts) => {
     const postOrderer = [];
     posts.forEach((post) => {
@@ -112,16 +126,24 @@ export const Wall = (onNavigate) => {
       postText.value = post.publication;
       postText.disabled = true;
 
+      const buttonLikeImg = document.createElement('img');
+      buttonLikeImg.src = likeIcon;
+
       const buttonLike = document.createElement('button');
-      buttonLike.textContent = `${post.likes.length} Like`;
+      buttonLike.textContent = `${post.likes.length}`;
       buttonLike.addEventListener('click', () => {
         likePost(post.id, post.likes).then(() => {
           onNavigate('/wall');
         });
       });
 
+      buttonLike.appendChild(buttonLikeImg);
+
+      const editIconImg = document.createElement('img');
+      editIconImg.src = editIcon;
+
       const buttonEdit = document.createElement('button');
-      buttonEdit.textContent = 'Editar';
+      buttonEdit.alt = 'Editar';
       buttonEdit.addEventListener('click', () => {
         postText.disabled = !postText.disabled;
         if (postText.disabled) {
@@ -130,6 +152,9 @@ export const Wall = (onNavigate) => {
           postText.style.border = '1px solid #000000';
         }
       });
+
+      buttonEdit.appendChild(editIconImg);
+
       const buttonSave = document.createElement('button');
       buttonSave.textContent = 'Guardar';
       buttonSave.addEventListener('click', () => {
@@ -138,21 +163,29 @@ export const Wall = (onNavigate) => {
         });
       });
 
+      const buttonDeleteImg = document.createElement('img');
+      buttonDeleteImg.src = deleteIcon;
+
       const buttonDelete = document.createElement('button');
-      buttonDelete.textContent = 'Borrar';
+      buttonDelete.alt = 'Borrar';
       buttonDelete.addEventListener('click', () => {
         deletePost(post.id).then(() => {
           onNavigate('/wall');
         });
       });
-      postContainer.appendChild(buttonLike);
-      postContainer.appendChild(buttonEdit);
-      postContainer.appendChild(buttonSave);
-      postContainer.appendChild(buttonDelete);
-      postDiv.appendChild(postText);
-      postContainer.appendChild(postDiv);
-      wrapper.appendChild(postContainer);
 
+      buttonDelete.appendChild(buttonDeleteImg);
+
+      buttonsWrapper.appendChild(buttonLike);
+      buttonsWrapper.appendChild(buttonEdit);
+      buttonsWrapper.appendChild(buttonSave);
+      buttonsWrapper.appendChild(buttonDelete);
+      postDiv.appendChild(postText);
+      postDiv.appendChild(buttonsWrapper);
+
+      postContainer.appendChild(postDiv);
+
+      wrapper.appendChild(postContainer);
     });
   });
   return wrapper;
