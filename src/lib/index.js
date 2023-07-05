@@ -15,6 +15,7 @@ import {
   doc,
   deleteDoc,
   orderBy,
+  updateDoc,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -46,11 +47,18 @@ export function iniciaSesionConPopup() {
 export const createPost = async (post) => await addDoc(collection(db, 'posts'), {
   publication: post,
   date: new Date(),
+  likes: 0,
 });
 
 export const getPosts = async () => await getDocs(collection(db, 'posts'), orderBy('date', 'desc'));
 
 export const deletePost = async (id) => await deleteDoc(doc(db, 'posts', id));
+export const updatePost = async (id, post) => await updateDoc(doc(db, 'posts', id), {
+  publication: post,
+});
+export const likePost = async (id, like) => await updateDoc(doc(db, 'posts', id), {
+  likes: Number(like) + 1,
+});
 
 // const querySnapshot = await getDocs(collection(db, "post"));
 // querySnapshot.forEach((doc) => {

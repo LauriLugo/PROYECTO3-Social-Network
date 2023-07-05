@@ -1,7 +1,7 @@
 import homeSrc from '../media/home-icon.svg';
 import profileSrc from '../media/profile-icon.svg';
 import communitiesSrc from '../media/communities-icon.svg';
-import { createPost, getPosts, deletePost } from '../lib';
+import { createPost, getPosts, deletePost, updatePost, likePost } from '../lib';
 
 export const Wall = (onNavigate) => {
   const HomeDiv = document.createElement('div');
@@ -99,6 +99,7 @@ export const Wall = (onNavigate) => {
           id: post.id,
           publication: post.data().publication,
           date: post.data().date,
+          likes: post.data().likes,
         },
       );
     });
@@ -107,8 +108,36 @@ export const Wall = (onNavigate) => {
     postOrderer.forEach((post) => {
       const postDiv = document.createElement('div');
       postDiv.className = 'post-div';
-      const postText = document.createElement('p');
-      postText.textContent = post.publication;
+      const postText = document.createElement('input');
+      postText.value = post.publication;
+      postText.disabled = true;
+
+      const buttonLike = document.createElement('button');
+      buttonLike.textContent = `${post.likes} Like`;
+      buttonLike.addEventListener('click', () => {
+        likePost(post.id, post.likes).then(() => {
+          onNavigate('/wall');
+        });
+      });
+
+      const buttonEdit = document.createElement('button');
+      buttonEdit.textContent = 'Editar';
+      buttonEdit.addEventListener('click', () => {
+        postText.disabled = !postText.disabled;
+        if (postText.disabled) {
+          postText.style.border = 'none';
+        } else {
+          postText.style.border = '1px solid #000000';
+        }
+      });
+      const buttonSave = document.createElement('button');
+      buttonSave.textContent = 'Guardar';
+      buttonSave.addEventListener('click', () => {
+        updatePost(post.id, postText.value).then(() => {
+          onNavigate('/wall');
+        });
+      });
+
       const buttonDelete = document.createElement('button');
       buttonDelete.textContent = 'Borrar';
       buttonDelete.addEventListener('click', () => {
@@ -116,6 +145,9 @@ export const Wall = (onNavigate) => {
           onNavigate('/wall');
         });
       });
+      postContainer.appendChild(buttonLike);
+      postContainer.appendChild(buttonEdit);
+      postContainer.appendChild(buttonSave);
       postContainer.appendChild(buttonDelete);
       postDiv.appendChild(postText);
       postContainer.appendChild(postDiv);
