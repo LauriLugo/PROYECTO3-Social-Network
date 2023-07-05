@@ -11,7 +11,11 @@ import {
   getFirestore,
   collection,
   addDoc,
-  // getDocs,
+  getDocs,
+  doc,
+  deleteDoc,
+  orderBy,
+  updateDoc,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -40,8 +44,22 @@ export function iniciaSesionConPopup() {
   return signInWithPopup(auth, provider);
 }
 
-export const createPost = (post) => addDoc(collection(db, 'posts'), {
+export const emailUsuario = () => auth.currentUser.email;
+
+export const createPost = async (post) => await addDoc(collection(db, 'posts'), {
   publication: post,
+  date: new Date(),
+  likes: [],
+});
+
+export const getPosts = async () => await getDocs(collection(db, 'posts'), orderBy('date', 'desc'));
+
+export const deletePost = async (id) => await deleteDoc(doc(db, 'posts', id));
+export const updatePost = async (id, post) => await updateDoc(doc(db, 'posts', id), {
+  publication: post,
+});
+export const likePost = async (id, like) => await updateDoc(doc(db, 'posts', id), {
+  likes: [...new Set([...like, auth.currentUser.email])],
 });
 
 // const querySnapshot = await getDocs(collection(db, "post"));

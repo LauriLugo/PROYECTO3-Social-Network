@@ -1,7 +1,7 @@
 import homeSrc from '../media/home-icon.svg';
 import profileSrc from '../media/profile-icon.svg';
 import communitiesSrc from '../media/communities-icon.svg';
-import { createPost } from '../lib';
+import { createPost, getPosts, deletePost, updatePost, likePost, emailUsuario } from '../lib';
 
 export const Wall = (onNavigate) => {
   const HomeDiv = document.createElement('div');
@@ -36,7 +36,12 @@ export const Wall = (onNavigate) => {
   postButton.type = 'submit';
   postButton.addEventListener('click', (e) => {
     e.preventDefault();
-    createPost(inputForm.value);
+    if (inputForm.value !== '') {
+      createPost(inputForm.value).then(() => {
+        inputForm.value = '';
+        onNavigate('/wall');
+      });
+    }
   });
 
   formPost.appendChild(welcomeMessage);
@@ -86,5 +91,69 @@ export const Wall = (onNavigate) => {
   wrapper.appendChild(formPost);
   wrapper.appendChild(navBar);
 
+  getPosts().then((posts) => {
+    const postOrderer = [];
+    posts.forEach((post) => {
+      postOrderer.push(
+        {
+          id: post.id,
+          publication: post.data().publication,
+          date: post.data().date,
+          likes: post.data().likes,
+        },
+      );
+    });
+    postOrderer.sort((a, b) => b.date - a.date);
+    // console.log(postOrderer);
+    postOrderer.forEach((post) => {
+      const postDiv = document.createElement('div');
+      postDiv.className = 'post-div';
+      const postText = document.createElement('input');
+      postText.value = post.publication;
+      postText.disabled = true;
+
+      const buttonLike = document.createElement('button');
+      buttonLike.textContent = `${post.likes.length} Like`;
+      buttonLike.addEventListener('click', () => {
+        likePost(post.id, post.likes).then(() => {
+          onNavigate('/wall');
+        });
+      });
+
+      const buttonEdit = document.createElement('button');
+      buttonEdit.textContent = 'Editar';
+      buttonEdit.addEventListener('click', () => {
+        postText.disabled = !postText.disabled;
+        if (postText.disabled) {
+          postText.style.border = 'none';
+        } else {
+          postText.style.border = '1px solid #000000';
+        }
+      });
+      const buttonSave = document.createElement('button');
+      buttonSave.textContent = 'Guardar';
+      buttonSave.addEventListener('click', () => {
+        updatePost(post.id, postText.value).then(() => {
+          onNavigate('/wall');
+        });
+      });
+
+      const buttonDelete = document.createElement('button');
+      buttonDelete.textContent = 'Borrar';
+      buttonDelete.addEventListener('click', () => {
+        deletePost(post.id).then(() => {
+          onNavigate('/wall');
+        });
+      });
+      postContainer.appendChild(buttonLike);
+      postContainer.appendChild(buttonEdit);
+      postContainer.appendChild(buttonSave);
+      postContainer.appendChild(buttonDelete);
+      postDiv.appendChild(postText);
+      postContainer.appendChild(postDiv);
+      wrapper.appendChild(postContainer);
+
+    });
+  });
   return wrapper;
 };
