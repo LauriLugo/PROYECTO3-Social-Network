@@ -11,7 +11,7 @@ import {
   getFirestore,
   collection,
   addDoc,
-  // getDocs,
+  getDocs,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -40,9 +40,11 @@ export function iniciaSesionConPopup() {
   return signInWithPopup(auth, provider);
 }
 
-export const createPost = (post) => addDoc(collection(db, 'posts'), {
+export const createPost = async (post) => await addDoc(collection(db, 'posts'), {
   publication: post,
 });
+
+export const getPosts = async () => await getDocs(collection(db, 'posts'));
 
 // const querySnapshot = await getDocs(collection(db, "post"));
 // querySnapshot.forEach((doc) => {

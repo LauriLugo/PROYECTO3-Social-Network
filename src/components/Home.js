@@ -91,6 +91,10 @@ export const Home = (onNavigate) => {
   emailInput.placeholder = 'Correo electrónico';
   emailInput.required = true;
 
+
+
+
+  
   // Create the password input
   const passwordInput = document.createElement('input');
   passwordInput.type = 'password';

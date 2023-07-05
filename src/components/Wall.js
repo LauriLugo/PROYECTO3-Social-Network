@@ -1,7 +1,7 @@
 import homeSrc from '../media/home-icon.svg';
 import profileSrc from '../media/profile-icon.svg';
 import communitiesSrc from '../media/communities-icon.svg';
-import { createPost } from '../lib';
+import { createPost, getPosts } from '../lib';
 
 export const Wall = (onNavigate) => {
   const HomeDiv = document.createElement('div');
@@ -36,7 +36,12 @@ export const Wall = (onNavigate) => {
   postButton.type = 'submit';
   postButton.addEventListener('click', (e) => {
     e.preventDefault();
-    createPost(inputForm.value);
+    if (inputForm.value !== '') {
+      createPost(inputForm.value).then(() => {
+        inputForm.value = '';
+        onNavigate('/wall');
+      });
+    }
   });
 
   formPost.appendChild(welcomeMessage);
@@ -86,5 +91,16 @@ export const Wall = (onNavigate) => {
   wrapper.appendChild(formPost);
   wrapper.appendChild(navBar);
 
+  getPosts().then((posts) => {
+    posts.forEach((post) => {
+      const postDiv = document.createElement('div');
+      postDiv.className = 'post-div';
+      const postText = document.createElement('p');
+      postText.textContent = post.data().publication;
+      postDiv.appendChild(postText);
+      postContainer.appendChild(postDiv);
+      wrapper.appendChild(postContainer);
+    });
+  });
   return wrapper;
 };
