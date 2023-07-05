@@ -1,7 +1,7 @@
 import homeSrc from '../media/home-icon.svg';
 import profileSrc from '../media/profile-icon.svg';
 import communitiesSrc from '../media/communities-icon.svg';
-import { createPost, getPosts } from '../lib';
+import { createPost, getPosts, deletePost } from '../lib';
 
 export const Wall = (onNavigate) => {
   const HomeDiv = document.createElement('div');
@@ -92,14 +92,35 @@ export const Wall = (onNavigate) => {
   wrapper.appendChild(navBar);
 
   getPosts().then((posts) => {
+    const postOrderer = [];
     posts.forEach((post) => {
+      postOrderer.push(
+        {
+          id: post.id,
+          publication: post.data().publication,
+          date: post.data().date,
+        },
+      );
+    });
+    postOrderer.sort((a, b) => b.date - a.date);
+    // console.log(postOrderer);
+    postOrderer.forEach((post) => {
       const postDiv = document.createElement('div');
       postDiv.className = 'post-div';
       const postText = document.createElement('p');
-      postText.textContent = post.data().publication;
+      postText.textContent = post.publication;
+      const buttonDelete = document.createElement('button');
+      buttonDelete.textContent = 'Borrar';
+      buttonDelete.addEventListener('click', () => {
+        deletePost(post.id).then(() => {
+          onNavigate('/wall');
+        });
+      });
+      postContainer.appendChild(buttonDelete);
       postDiv.appendChild(postText);
       postContainer.appendChild(postDiv);
       wrapper.appendChild(postContainer);
+
     });
   });
   return wrapper;
