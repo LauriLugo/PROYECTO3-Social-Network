@@ -11,6 +11,7 @@ import {
   deletePost,
   updatePost,
   likePost,
+  emailUsuario,
   // emailUsuario,
 } from '../lib';
 
@@ -132,9 +133,14 @@ export const Wall = (onNavigate) => {
       const buttonLike = document.createElement('button');
       buttonLike.textContent = `${post.likes.length}`;
       buttonLike.addEventListener('click', () => {
-        likePost(post.id, post.likes).then(() => {
-          onNavigate('/wall');
-        });
+        const user = emailUsuario();
+        const userLiked = post.likes.includes(user);
+        if (!userLiked) {
+          post.likes.push(user);
+          likePost(post.id, post.likes).then(() => {
+            onNavigate('/wall');
+          });
+        }
       });
 
       buttonLike.appendChild(buttonLikeImg);

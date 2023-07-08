@@ -14,7 +14,6 @@ import {
   getDocs,
   doc,
   deleteDoc,
-  orderBy,
   updateDoc,
 } from 'firebase/firestore';
 
@@ -52,14 +51,14 @@ export const createPost = async (post) => addDoc(collection(db, 'posts'), {
   likes: [],
 });
 
-export const getPosts = async () => getDocs(collection(db, 'posts'), orderBy('date', 'desc'));
+export const getPosts = async () => getDocs(collection(db, 'posts'));
 
 export const deletePost = async (id) => deleteDoc(doc(db, 'posts', id));
 export const updatePost = async (id, post) => updateDoc(doc(db, 'posts', id), {
   publication: post,
 });
 export const likePost = async (id, like) => updateDoc(doc(db, 'posts', id), {
-  likes: [...new Set([...like, auth.currentUser.email])],
+  likes: [...new Set([...like])],
 });
 
 console.log(app);
