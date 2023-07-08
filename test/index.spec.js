@@ -5,6 +5,7 @@ import {
 } from 'firebase/firestore';
 import {
   crearUsuarioConCorreoYContraseña,
+  iniciaSesionConCorreoYContraseña,
   iniciaSesionConPopup,
   emailUsuario,
   createPost,
@@ -54,6 +55,22 @@ describe('crearUsuarioConCorreoYContraseña', () => {
     const password = 'password';
     crearUsuarioConCorreoYContraseña(email, password);
     expect(crearUsuarioConCorreoYContraseña).toHaveBeenCalledWith(email, password);
+  });
+});
+
+describe('iniciaSesionConCorreoYContraseña', () => {
+  it('Debería ser una función', () => {
+    expect(typeof iniciaSesionConCorreoYContraseña).toBe('function');
+  });
+  it('Deberia llamar a la funcion iniciaSesionConCorreoYContraseña', () => {
+    iniciaSesionConCorreoYContraseña();
+    expect(iniciaSesionConCorreoYContraseña).toHaveBeenCalled();
+  });
+  it('Debería llamar a la función iniciaSesionConCorreoYContraseña', () => {
+    const email = 'test@example.com';
+    const password = 'password';
+    iniciaSesionConCorreoYContraseña(email, password);
+    expect(iniciaSesionConCorreoYContraseña).toHaveBeenCalledWith(email, password);
   });
 });
 
