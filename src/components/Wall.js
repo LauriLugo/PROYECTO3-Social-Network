@@ -1,5 +1,3 @@
-// import { doc } from 'firebase/firestore';
-
 import homeSrc from '../media/home-icon.svg';
 import profileSrc from '../media/profile-icon.svg';
 import communitiesSrc from '../media/communities-icon.svg';
@@ -70,9 +68,6 @@ export const Wall = (onNavigate) => {
   const postContainer = document.createElement('div');
   postContainer.setAttribute('id', 'post-container');
 
-  const buttonsWrapper = document.createElement('div');
-  buttonsWrapper.className = 'buttons-wrapper';
-
   getPosts().then((posts) => {
     const postOrderer = [];
     posts.forEach((post) => {
@@ -86,24 +81,25 @@ export const Wall = (onNavigate) => {
       );
       postOrderer.sort((a, b) => b.date - a.date);
       // console.log(postOrderer);
-      postOrderer.forEach((post) => {
+      postOrderer.forEach((postUser) => {
         const postDiv = document.createElement('div');
         postDiv.className = 'post-div';
         const postText = document.createElement('input');
-        postText.value = post.publication;
+        postText.value = postUser.publication;
         postText.disabled = true;
 
         const buttonLikeImg = document.createElement('img');
         buttonLikeImg.src = likeIcon;
 
         const buttonLike = document.createElement('button');
-        buttonLike.textContent = `${post.likes.length}`;
+        buttonLike.textContent = `${postUser.likes.length}`;
         buttonLike.addEventListener('click', () => {
           const user = emailUsuario();
-          const userLiked = post.likes.includes(user);
+          console.log(user);
+          const userLiked = postUser.likes.includes(user);
           if (!userLiked) {
-            post.likes.push(user);
-            likePost(post.id, post.likes).then(() => {
+            postUser.likes.push(user);
+            likePost(postUser.id, postUser.likes).then(() => {
               onNavigate('/wall');
             });
           }
@@ -146,12 +142,48 @@ export const Wall = (onNavigate) => {
         const buttonDelete = document.createElement('button');
         buttonDelete.alt = 'Borrar';
         buttonDelete.addEventListener('click', () => {
-          deletePost(post.id).then(() => {
-            onNavigate('/wall');
+          const ConfirmationDiv = document.createElement('div');
+          ConfirmationDiv.setAttribute('class', 'confirmation-content');
+          wrapper.classList.toggle('window-active');
+
+          ConfirmationDiv.innerHTML = `
+            <div id='modal' class='modal'>
+              <p>¿Estás seguro de borrar este post?</p>
+              <div class='container-confirmationBts'>
+                <button id='buttonYes' class='buttonEdit'><img src="../media/accept.svg" alt="Aceptar" class='modal-button'></button>
+                <button id='buttonNo' class='buttonEdit'><img src="../media/denied.svg" alt="Cancelar" class='modal-button'></button>
+              </div>
+            </div>`;
+
+          document.body.appendChild(ConfirmationDiv);
+          // Agrega el evento click al botón de confirmar del modal
+          document.getElementById('buttonYes').addEventListener('click', async () => {
+            // Realizar la eliminación del post
+            try {
+              await deletePost(post.id);
+              onNavigate('/wall');
+              wrapper.classList.toggle('window-active');
+            } catch (error) {
+              console.error('Error deleting post:', error);
+            }
+            // Ocultar el div modal
+            ConfirmationDiv.style.display = 'none';
+            document.body.removeChild(ConfirmationDiv);
+          });
+
+          // Agrega el evento click al botón de cancelar del modal
+          document.getElementById('buttonNo').addEventListener('click', () => {
+            // Ocultar el div modal
+            ConfirmationDiv.style.display = 'none';
+            document.body.removeChild(ConfirmationDiv);
+            wrapper.classList.toggle('window-active');
           });
         });
 
         buttonDelete.appendChild(buttonDeleteImg);
+
+        const buttonsWrapper = document.createElement('div');
+        buttonsWrapper.className = 'buttons-wrapper';
 
         buttonsWrapper.appendChild(buttonLike);
         buttonsWrapper.appendChild(buttonEdit);
