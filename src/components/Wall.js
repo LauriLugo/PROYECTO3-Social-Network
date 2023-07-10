@@ -1,9 +1,13 @@
+// import { doc } from 'firebase/firestore';
+
 import homeSrc from '../media/home-icon.svg';
 import profileSrc from '../media/profile-icon.svg';
 import communitiesSrc from '../media/communities-icon.svg';
 import editIcon from '../media/edit-icon.svg';
 import likeIcon from '../media/like-icon.svg';
+import saveIcon from '../media/save-icon.svg';
 import deleteIcon from '../media/delete-icon.svg';
+import logoIcon from '../media/logo-icon.svg';
 
 import {
   createPost,
@@ -12,7 +16,6 @@ import {
   updatePost,
   likePost,
   emailUsuario,
-  // emailUsuario,
 } from '../lib';
 
 export const Wall = (onNavigate) => {
@@ -61,8 +64,114 @@ export const Wall = (onNavigate) => {
   formPost.appendChild(inputForm);
   formPost.appendChild(postButton);
 
+  const postWrapper = document.createElement('div');
+  postWrapper.className = 'post-wrapper';
+
   const postContainer = document.createElement('div');
   postContainer.setAttribute('id', 'post-container');
+
+  const buttonsWrapper = document.createElement('div');
+  buttonsWrapper.className = 'buttons-wrapper';
+
+  getPosts().then((posts) => {
+    const postOrderer = [];
+    posts.forEach((post) => {
+      postOrderer.push(
+        {
+          id: post.id,
+          publication: post.data().publication,
+          date: post.data().date,
+          likes: post.data().likes,
+        },
+      );
+      postOrderer.sort((a, b) => b.date - a.date);
+      // console.log(postOrderer);
+      postOrderer.forEach((post) => {
+        const postDiv = document.createElement('div');
+        postDiv.className = 'post-div';
+        const postText = document.createElement('input');
+        postText.value = post.publication;
+        postText.disabled = true;
+
+        const buttonLikeImg = document.createElement('img');
+        buttonLikeImg.src = likeIcon;
+
+        const buttonLike = document.createElement('button');
+        buttonLike.textContent = `${post.likes.length}`;
+        buttonLike.addEventListener('click', () => {
+          const user = emailUsuario();
+          const userLiked = post.likes.includes(user);
+          if (!userLiked) {
+            post.likes.push(user);
+            likePost(post.id, post.likes).then(() => {
+              onNavigate('/wall');
+            });
+          }
+        });
+
+        buttonLike.appendChild(buttonLikeImg);
+
+        const editIconImg = document.createElement('img');
+        editIconImg.src = editIcon;
+
+        const buttonEdit = document.createElement('button');
+        buttonEdit.alt = 'Editar';
+        buttonEdit.addEventListener('click', () => {
+          postText.disabled = !postText.disabled;
+          if (postText.disabled) {
+            postText.style.border = 'none';
+          } else {
+            postText.style.border = '1px solid #000000';
+          }
+        });
+
+        buttonEdit.appendChild(editIconImg);
+
+        const saveIconImg = document.createElement('img');
+        saveIconImg.src = saveIcon;
+
+        const buttonSave = document.createElement('button');
+        buttonSave.alt = 'Guardar';
+        buttonSave.addEventListener('click', () => {
+          updatePost(post.id, postText.value).then(() => {
+            onNavigate('/wall');
+          });
+        });
+
+        buttonSave.appendChild(saveIconImg);
+
+        const buttonDeleteImg = document.createElement('img');
+        buttonDeleteImg.src = deleteIcon;
+
+        const buttonDelete = document.createElement('button');
+        buttonDelete.alt = 'Borrar';
+        buttonDelete.addEventListener('click', () => {
+          deletePost(post.id).then(() => {
+            onNavigate('/wall');
+          });
+        });
+
+        buttonDelete.appendChild(buttonDeleteImg);
+
+        buttonsWrapper.appendChild(buttonLike);
+        buttonsWrapper.appendChild(buttonEdit);
+        buttonsWrapper.appendChild(buttonSave);
+        buttonsWrapper.appendChild(buttonDelete);
+
+        postDiv.appendChild(postText);
+        postDiv.appendChild(buttonsWrapper);
+        postContainer.appendChild(postDiv);
+
+        postWrapper.appendChild(postDiv);
+      });
+    });
+  });
+
+  const wallContainer = document.createElement('div');
+  wallContainer.className = 'wall-container';
+
+  wallContainer.appendChild(formPost);
+  wallContainer.appendChild(postWrapper);
 
   // We create the navbar
   const navBar = document.createElement('nav');
@@ -96,103 +205,22 @@ export const Wall = (onNavigate) => {
 
   communitiesIconContainer.appendChild(communitiesIcon);
 
-  navBar.appendChild(profileIconContainer);
-  navBar.appendChild(homeIconContainer);
-  navBar.appendChild(communitiesIconContainer);
+  const logoIconImg = document.createElement('img');
+  logoIconImg.className = 'logo-icon';
+  logoIconImg.src = logoIcon;
 
-  wrapper.appendChild(formPost);
+  const navBarWrapper = document.createElement('div');
+  navBarWrapper.className = 'nav-wrapper';
+
+  navBarWrapper.appendChild(profileIconContainer);
+  navBarWrapper.appendChild(homeIconContainer);
+  navBarWrapper.appendChild(communitiesIconContainer);
+
+  navBar.appendChild(navBarWrapper);
+  navBar.appendChild(logoIconImg);
+
+  wrapper.appendChild(wallContainer);
   wrapper.appendChild(navBar);
 
-  const buttonsWrapper = document.createElement('div');
-  buttonsWrapper.className = 'buttons-wrapper';
-
-  getPosts().then((posts) => {
-    const postOrderer = [];
-    posts.forEach((post) => {
-      postOrderer.push(
-        {
-          id: post.id,
-          publication: post.data().publication,
-          date: post.data().date,
-          likes: post.data().likes,
-        },
-      );
-    });
-    postOrderer.sort((a, b) => b.date - a.date);
-    // console.log(postOrderer);
-    postOrderer.forEach((post) => {
-      const postDiv = document.createElement('div');
-      postDiv.className = 'post-div';
-      const postText = document.createElement('input');
-      postText.value = post.publication;
-      postText.disabled = true;
-
-      const buttonLikeImg = document.createElement('img');
-      buttonLikeImg.src = likeIcon;
-
-      const buttonLike = document.createElement('button');
-      buttonLike.textContent = `${post.likes.length}`;
-      buttonLike.addEventListener('click', () => {
-        const user = emailUsuario();
-        const userLiked = post.likes.includes(user);
-        if (!userLiked) {
-          post.likes.push(user);
-          likePost(post.id, post.likes).then(() => {
-            onNavigate('/wall');
-          });
-        }
-      });
-
-      buttonLike.appendChild(buttonLikeImg);
-
-      const editIconImg = document.createElement('img');
-      editIconImg.src = editIcon;
-
-      const buttonEdit = document.createElement('button');
-      buttonEdit.alt = 'Editar';
-      buttonEdit.addEventListener('click', () => {
-        postText.disabled = !postText.disabled;
-        if (postText.disabled) {
-          postText.style.border = 'none';
-        } else {
-          postText.style.border = '1px solid #000000';
-        }
-      });
-
-      buttonEdit.appendChild(editIconImg);
-
-      const buttonSave = document.createElement('button');
-      buttonSave.textContent = 'Guardar';
-      buttonSave.addEventListener('click', () => {
-        updatePost(post.id, postText.value).then(() => {
-          onNavigate('/wall');
-        });
-      });
-
-      const buttonDeleteImg = document.createElement('img');
-      buttonDeleteImg.src = deleteIcon;
-
-      const buttonDelete = document.createElement('button');
-      buttonDelete.alt = 'Borrar';
-      buttonDelete.addEventListener('click', () => {
-        deletePost(post.id).then(() => {
-          onNavigate('/wall');
-        });
-      });
-
-      buttonDelete.appendChild(buttonDeleteImg);
-
-      buttonsWrapper.appendChild(buttonLike);
-      buttonsWrapper.appendChild(buttonEdit);
-      buttonsWrapper.appendChild(buttonSave);
-      buttonsWrapper.appendChild(buttonDelete);
-      postDiv.appendChild(postText);
-      postDiv.appendChild(buttonsWrapper);
-
-      postContainer.appendChild(postDiv);
-
-      wrapper.appendChild(postContainer);
-    });
-  });
   return wrapper;
 };
