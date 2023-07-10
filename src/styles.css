@@ -170,10 +170,6 @@ input{
   color: #817C7C;
 }
 
-
-
-
-
 .continue{
   text-align: end;
 }
@@ -254,13 +250,20 @@ footer > p {
   background-color: #FBF4F9;
 }
 
+.wall-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .form-post{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   background-color: #F6E7E6;
   gap: 1rem;
-  margin: 1rem;
   padding: 1rem;
   resize: none;
   padding: 20px 10px;
@@ -290,6 +293,22 @@ footer > p {
   -ms-user-select: none;
   color: #444444;
 }
+
+.post-wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem ;
+  width: 100%;
+}
+
+.post-div{
+  box-sizing: border-box;
+  padding: 1rem;
+  width: 100%;
+  background-color: #F6E7E6;
+  border-radius: 8px;
+}
+
 #post-container{
   display: flex;
   flex-direction: column;
@@ -299,10 +318,6 @@ footer > p {
   padding: 20px 10px;
   border-radius: 8px;
   width: 340px;
-}
-
-.post-div{
-  width: 100%;
 }
 
 .post-div > input{
@@ -328,6 +343,27 @@ footer > p {
   justify-content: flex-end;
   padding-top: 1rem;
   gap: .5rem;
+}
+
+.buttons-wrapper > button{
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+}
+
+.nav-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%; 
+}
+
+.logo-icon{
+  display: none;
 }
 
 .nav-bar{
@@ -392,5 +428,74 @@ footer > p {
   .google-button:hover{
     background-color: #4285F4;
     color: #FFFFFF;
+  }
+
+  .nav-bar{
+    top: 0;
+    height: 10%;
+    justify-content: space-between;
+  }
+
+  .nav-wrapper{
+    width: 30%;
+  }
+
+  .icon{
+    width: 35px;
+  }
+
+  .logo-icon{
+    display: flex;
+  }
+
+  .wall-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    width: 60%;
+    padding: 8rem 0;
+    gap: 1.5rem;
+  }
+
+  .form-post{
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .input-post{
+    box-sizing: border-box;
+    resize: none;
+    width: 100%;
+    border: none;
+  }
+
+  .post-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2rem;
+  }
+
+  .post-div{
+    background-color: #F6E7E6;
+  }
+
+  #post-container{
+    width: 100%;
+  }
+
+  .buttons-wrapper > button{
+    background: none;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    line-height: normal;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .buttons-wrapper > button:hover{
+    cursor: pointer;
   }
 }

@@ -16,8 +16,6 @@ import {
   likePost,
 } from '../src/lib/index';
 
-// const { firestore } = require('firebase-admin');
-
 jest.mock('firebase/app', () => ({
   initializeApp: jest.fn(),
 }));
