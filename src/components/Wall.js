@@ -176,7 +176,7 @@ export const Wall = (onNavigate) => {
             // Ocultar el div modal
             ConfirmationDiv.style.display = 'none';
             document.body.removeChild(ConfirmationDiv);
-            wrapper.classList.toggle('window-active');
+            wrapper.classList.toggle('window-hidden');
           });
         });
 
