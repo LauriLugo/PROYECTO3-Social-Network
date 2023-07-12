@@ -210,8 +210,12 @@ export const Wall = (onNavigate) => {
   navBar.className = 'nav-bar';
 
   // We proceed then to create the icon containers for the icon images.
+
   const profileIconContainer = document.createElement('picture');
   profileIconContainer.className = 'icon-container';
+  profileIconContainer.addEventListener('click', () => {
+    onNavigate('/profile');
+  });
 
   const profileIcon = document.createElement('img');
   profileIcon.className = 'icon';

@@ -400,6 +400,16 @@ footer > p {
   padding: 1rem;
 }
 
+.nav-wrapper > button{
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+}
+
 .confirmation-content{
   position: fixed;
   z-index: 10;
@@ -466,8 +476,31 @@ footer > p {
 
 .modal-button:hover{
   transform: scale(1.5);
-
 }
+
+.profile-wrapper{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 2rem;
+height: 100vh;
+}
+
+.profile-container{
+  position: absolute;
+  top: 5%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  height: 250px;
+  width: 100%;
+}
+
+.profile-image{
+  height: 100%;
+}
+
 
 @media (min-width: 768px) {
 
