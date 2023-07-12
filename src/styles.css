@@ -31,6 +31,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+  background-color: #FBF4F9;
 }
 ol, ul {
 	list-style: none;
@@ -324,8 +325,12 @@ footer > p {
   width: 100%;
   background-color: #F6E7E6;
   border-radius: 8px;
+  height: 5rem;
 }
-
+.post-text{
+  width: 98%;
+  height: 65%;
+}
 #post-container{
   display: flex;
   flex-direction: column;
