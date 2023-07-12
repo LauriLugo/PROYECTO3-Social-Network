@@ -1,5 +1,6 @@
 import { GoogleAuthProvider } from 'firebase/auth';
 import { iniciaSesionConCorreoYContraseña, iniciaSesionConPopup } from '../lib';
+import { showMessage } from './Modal';
 import logoSrc from '../media/logo.png';
 import disclaimerSrc from '../media/disclaimer.png';
 
@@ -122,10 +123,10 @@ export const Home = (onNavigate) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage, 'error custom');
-        if (errorCode === 'auth/invalid-email') alert('Correo incorrecto');
-        if (errorCode === 'auth/missing-password') alert('Escribe tu contraseña');
-        if (errorCode === 'auth/wrong-password') alert('Contraseña incorrecta');
-        if (errorCode === 'auth/user-not-found') alert('Usuario no registrado');
+        if (errorCode === 'auth/invalid-email') showMessage('Correo incorrecto');
+        if (errorCode === 'auth/missing-password') showMessage('Escribe tu contraseña');
+        if (errorCode === 'auth/wrong-password') showMessage('Contraseña incorrecta');
+        if (errorCode === 'auth/user-not-found') showMessage('Usuario no registrado');
       });
   });
 

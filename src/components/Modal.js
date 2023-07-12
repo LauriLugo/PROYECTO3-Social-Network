@@ -1,11 +1,11 @@
 export function showMessage(message) {
 // Crea el contenedor de la ventana modal
   const modalContainer = document.createElement('div');
-  modalContainer.className = ('modal-container');
+  modalContainer.className = ('modal');
 
   // Crea el fondo oscuro
   const overlay = document.createElement('div');
-  overlay.className = 'overlay';
+  overlay.className = 'confirmation-content';
 
   // Crea el contenido de la ventana modal
   const modalContent = document.createElement('div');
@@ -25,8 +25,7 @@ export function showMessage(message) {
 
   // Función para mostrar la ventana modal
   function showModal() {
-    overlay.style.display = 'block';
-    modalContainer.style.display = 'block';
+    modalContainer.style.display = 'flex';
   }
 
   // Función para ocultar la ventana modal
