@@ -1,5 +1,6 @@
 import logoSrc from '../media/logo.png';
 import { iniciaSesionConPopup, crearUsuarioConCorreoYContraseña } from '../lib';
+import { showMessage } from './Modal';
 
 export const Register = (onNavigate) => {
   // create the main wrapper that includes the logo and the container
@@ -68,9 +69,9 @@ export const Register = (onNavigate) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        if (errorCode === 'auth/invalid-email') alert('Correo incorrecto');
-        if (errorCode === 'auth/missing-password') alert('Escribe tu contraseña');
-        if (errorCode === 'auth/weak-password') alert('La contraseña debe tener al menos 6 caracteres');
+        if (errorCode === 'auth/invalid-email') showMessage('Correo incorrecto');
+        if (errorCode === 'auth/missing-password') showMessage('Escribe tu contraseña');
+        if (errorCode === 'auth/weak-password') showMessage('La contraseña debe tener al menos 6 caracteres');
         // ..
       });
   });
