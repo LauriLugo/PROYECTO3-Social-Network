@@ -28,6 +28,7 @@ export const Profile = (onNavigate) => {
   logoutButton.className = 'logout-button';
   logoutButton.textContent = 'Cerrar sesion';
   logoutButton.addEventListener('click', () => {
+    localStorage.removeItem('user');
     const auth = getAuth();
     signOut(auth).then(() => {
       onNavigate('/');

@@ -65,6 +65,7 @@ export const Register = (onNavigate) => {
     e.preventDefault();
     crearUsuarioConCorreoYContraseña(emailInput.value, passwordInput.value)
       .then((userCredential, error) => {
+        // localStorage.setItem('user', user);
         if (emailInput.value === '' || passwordInput.value === '') {
           showMessage('Por favor, completa todos los campos');
           const errorCode = error.code;
@@ -73,7 +74,6 @@ export const Register = (onNavigate) => {
         } else {
         // Signed in
           const user = userCredential.user;
-          // localStorage.setItem('user', user);
 
           onNavigate('/');
           // ...

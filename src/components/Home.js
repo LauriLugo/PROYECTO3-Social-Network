@@ -115,8 +115,8 @@ export const Home = (onNavigate) => {
     iniciaSesionConCorreoYContraseña(emailInput.value, passwordInput.value)
       .then((userCredential) => {
         // Signed in
-        // const user = userCredential.user;
-        // localStorage.setItem('user', JSON.stringify(userCredential.user));
+        const user = userCredential.user;
+        localStorage.setItem('user', user.email);
         onNavigate('/wall');
         // ...
         console.log(userCredential);
@@ -150,9 +150,10 @@ export const Home = (onNavigate) => {
   googleButton.addEventListener('click', (e) => {
     e.preventDefault();
     iniciaSesionConPopup()
-      .then((result) => {
+      .then((userCredential) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        console.log(result);
+        const user = userCredential.user;
+        localStorage.setItem('user', user.email);
         onNavigate('/wall');
       }).catch((error) => {
         // Handle Errors here.
