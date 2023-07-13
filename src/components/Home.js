@@ -7,6 +7,7 @@ import disclaimerSrc from '../media/disclaimer.png';
 // Your web app's Firebase configuration
 
 export const Home = (onNavigate) => {
+  // if (localStorage.getItem('user') !== null) onNavigate('/wall');
   const buttonLogin = document.createElement('button');
   buttonLogin.textContent = 'Inicia sesión';
   buttonLogin.addEventListener('click', () => onNavigate('/register'));
@@ -115,6 +116,7 @@ export const Home = (onNavigate) => {
       .then((userCredential) => {
         // Signed in
         // const user = userCredential.user;
+        // localStorage.setItem('user', JSON.stringify(userCredential.user));
         onNavigate('/wall');
         // ...
         console.log(userCredential);
@@ -157,10 +159,10 @@ export const Home = (onNavigate) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         // The email of the user's account used.
-        const email = error.customData.email;
+        // const email = error.customData.email;
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(errorCode, errorMessage, email, credential);
+        console.log(error);
         // ...
       });
   });

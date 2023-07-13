@@ -73,6 +73,8 @@ export const Register = (onNavigate) => {
         } else {
         // Signed in
           const user = userCredential.user;
+          // localStorage.setItem('user', user);
+
           onNavigate('/');
           // ...
           console.log(user);
