@@ -4,7 +4,6 @@ import { iniciaSesionConPopup, crearUsuarioConCorreoYContraseña } from '../lib'
 import { showMessage } from './Modal';
 import logoGoogle from '../media/google.svg';
 
-
 export const Register = (onNavigate) => {
   // create the main wrapper that includes the logo and the container
   // for the introductory text and the form
@@ -86,9 +85,13 @@ export const Register = (onNavigate) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        if (errorCode === 'auth/missing-email' || errorCode === 'auth/invalid-email') showMessage('Ingresa un correo');
-        if (errorCode === 'auth/missing-password') showMessage('Escribe tu contraseña');
-        if (errorCode === 'auth/weak-password') showMessage('La contraseña debe tener al menos 6 caracteres');
+        if (emailInput.value === '' || passwordInput.value === '') {
+          showMessage('Por favor, llena todos los campos');
+        } else {
+          if (errorCode === 'auth/invalid-email') showMessage('Ingresa un correo');
+          if (errorCode === 'auth/invalid-password') showMessage('Escribe tu contraseña');
+          if (errorCode === 'auth/weak-password') showMessage('La contraseña debe tener al menos 6 caracteres');
+        }
       });
   });
 

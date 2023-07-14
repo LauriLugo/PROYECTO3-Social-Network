@@ -164,11 +164,12 @@ export const Home = (onNavigate) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
+        if (errorCode) showMessage('Se encontró un error, intenta más tarde');
         // The email of the user's account used.
         // const email = error.customData.email;
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(error);
+        console.log(credential, error, errorMessage);
         // ...
       });
   });
