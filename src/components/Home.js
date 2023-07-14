@@ -114,7 +114,7 @@ export const Home = (onNavigate) => {
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
     if (emailInput.value === '' && passwordInput.value === '') {
-      showMessage('Por favor llena todos los campos');
+      showMessage('Por favor completa todos los campos');
     } else {
       iniciaSesionConCorreoYContraseña(emailInput.value, passwordInput.value)
         .then((userCredential) => {
