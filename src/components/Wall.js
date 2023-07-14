@@ -17,6 +17,10 @@ import {
 } from '../lib';
 
 export const Wall = (onNavigate) => {
+  if (localStorage.getItem('user') === null) {
+    onNavigate('/');
+    return null;
+  }
   const HomeDiv = document.createElement('div');
   const buttonLogin = document.createElement('button');
 
@@ -71,14 +75,12 @@ export const Wall = (onNavigate) => {
   getPosts().then((posts) => {
     const postOrderer = [];
     posts.forEach((post) => {
-      postOrderer.push(
-        {
-          id: post.id,
-          publication: post.data().publication,
-          date: post.data().date,
-          likes: post.data().likes,
-        },
-      );
+      postOrderer.push({
+        id: post.id,
+        publication: post.data().publication,
+        date: post.data().date,
+        likes: post.data().likes,
+      });
       postOrderer.sort((a, b) => b.date - a.date);
       console.log(postOrderer);
     });
@@ -149,29 +151,31 @@ export const Wall = (onNavigate) => {
         wrapper.classList.toggle('window-active');
 
         ConfirmationDiv.innerHTML = `
-          <div id='modal' class='modal'>
-            <p>¿Estás seguro de borrar este post?</p>
-            <div class='container-confirmationBts'>
-              <button id='buttonYes' class='buttonEdit'><img src="../media/accept.svg" alt="Aceptar" class='modal-button'></button>
-              <button id='buttonNo' class='buttonEdit'><img src="../media/denied.svg" alt="Cancelar" class='modal-button'></button>
-            </div>
-          </div>`;
+            <div id='modal' class='modal'>
+              <p>¿Estás seguro de borrar este post?</p>
+              <div class='container-confirmationBts'>
+                <button id='buttonYes' class='buttonEdit'><img src='../media/accept.svg' alt='Aceptar' class='modal-button'></button>
+                <button id='buttonNo' class='buttonEdit'><img src='../media/denied.svg' alt='Cancelar' class='modal-button'></button>
+              </div>
+            </div>`;
 
         document.body.appendChild(ConfirmationDiv);
         // Agrega el evento click al botón de confirmar del modal
-        document.getElementById('buttonYes').addEventListener('click', async () => {
-          // Realizar la eliminación del post
-          try {
-            await deletePost(postUser.id);
-            onNavigate('/wall');
-            wrapper.classList.toggle('window-active');
-          } catch (error) {
-            console.error('Error deleting post:', error);
-          }
-          // Ocultar el div modal
-          ConfirmationDiv.style.display = 'none';
-          document.body.removeChild(ConfirmationDiv);
-        });
+        document
+          .getElementById('buttonYes')
+          .addEventListener('click', async () => {
+            // Realizar la eliminación del post
+            try {
+              await deletePost(postUser.id);
+              onNavigate('/wall');
+              wrapper.classList.toggle('window-active');
+            } catch (error) {
+              console.error('Error deleting post:', error);
+            }
+            // Ocultar el div modal
+            ConfirmationDiv.style.display = 'none';
+            document.body.removeChild(ConfirmationDiv);
+          });
 
         // Agrega el evento click al botón de cancelar del modal
         document.getElementById('buttonNo').addEventListener('click', () => {
@@ -257,9 +261,7 @@ export const Wall = (onNavigate) => {
 
   navBar.appendChild(navBarWrapper);
   navBar.appendChild(logoIconImg);
-
   wrapper.appendChild(wallContainer);
   wrapper.appendChild(navBar);
-
   return wrapper;
 };

@@ -2,6 +2,8 @@ import logoSrc from '../media/logo.png';
 import backButton from '../media/back-one.svg';
 import { iniciaSesionConPopup, crearUsuarioConCorreoYContraseña } from '../lib';
 import { showMessage } from './Modal';
+import logoGoogle from '../media/google.svg';
+
 
 export const Register = (onNavigate) => {
   // create the main wrapper that includes the logo and the container
@@ -65,6 +67,7 @@ export const Register = (onNavigate) => {
     e.preventDefault();
     crearUsuarioConCorreoYContraseña(emailInput.value, passwordInput.value)
       .then((userCredential, error) => {
+        // localStorage.setItem('user', user);
         if (emailInput.value === '' || passwordInput.value === '') {
           showMessage('Por favor, completa todos los campos');
           const errorCode = error.code;
@@ -73,6 +76,7 @@ export const Register = (onNavigate) => {
         } else {
         // Signed in
           const user = userCredential.user;
+
           onNavigate('/');
           // ...
           console.log(user);
@@ -99,7 +103,7 @@ export const Register = (onNavigate) => {
 
   // Create the Google icon image
   const googleIcon = document.createElement('img');
-  googleIcon.src = '/media/google.svg';
+  googleIcon.src = logoGoogle;
   googleIcon.alt = 'Google icon';
   googleIcon.className = 'google-icon';
   googleButton.appendChild(googleIcon);
