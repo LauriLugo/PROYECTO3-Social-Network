@@ -3,6 +3,7 @@ import { iniciaSesionConCorreoYContraseña, iniciaSesionConPopup } from '../lib'
 import { showMessage } from './Modal';
 import logoSrc from '../media/logo.png';
 import disclaimerSrc from '../media/disclaimer.png';
+import logoGoogle from '../media/google.svg';
 
 // Your web app's Firebase configuration
 
@@ -112,24 +113,28 @@ export const Home = (onNavigate) => {
   nextButton.textContent = 'Siguiente';
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
-    iniciaSesionConCorreoYContraseña(emailInput.value, passwordInput.value)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        localStorage.setItem('user', user.email);
-        onNavigate('/wall');
-        // ...
-        console.log(userCredential);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage, 'error custom');
-        if (errorCode === 'auth/invalid-email') showMessage('Correo incorrecto');
-        if (errorCode === 'auth/missing-password') showMessage('Escribe tu contraseña');
-        if (errorCode === 'auth/wrong-password') showMessage('Contraseña incorrecta');
-        if (errorCode === 'auth/user-not-found') showMessage('Usuario no registrado');
-      });
+    if (emailInput.value === '' && passwordInput.value === '') {
+      showMessage('Por favor llena todos los campos');
+    } else {
+      iniciaSesionConCorreoYContraseña(emailInput.value, passwordInput.value)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          localStorage.setItem('user', user.email);
+          onNavigate('/wall');
+          // ...
+          console.log(userCredential);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage, 'error custom');
+          if (errorCode === 'auth/invalid-email') showMessage('Correo incorrecto');
+          if (errorCode === 'auth/missing-password') showMessage('Escribe tu contraseña');
+          if (errorCode === 'auth/wrong-password') showMessage('Contraseña incorrecta');
+          if (errorCode === 'auth/user-not-found') showMessage('Usuario no registrado');
+        });
+    }
   });
 
   // Create google container, that way we can center the button
@@ -143,7 +148,7 @@ export const Home = (onNavigate) => {
 
   // Create the Google icon image
   const googleIcon = document.createElement('img');
-  googleIcon.src = '/media/google.svg';
+  googleIcon.src = logoGoogle;
   googleIcon.alt = 'Google icon';
   googleIcon.className = 'google-icon';
   googleButton.appendChild(googleIcon);

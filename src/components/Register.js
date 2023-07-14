@@ -2,6 +2,8 @@ import logoSrc from '../media/logo.png';
 import backButton from '../media/back-one.svg';
 import { iniciaSesionConPopup, crearUsuarioConCorreoYContraseña } from '../lib';
 import { showMessage } from './Modal';
+import logoGoogle from '../media/google.svg';
+
 
 export const Register = (onNavigate) => {
   // create the main wrapper that includes the logo and the container
@@ -101,7 +103,7 @@ export const Register = (onNavigate) => {
 
   // Create the Google icon image
   const googleIcon = document.createElement('img');
-  googleIcon.src = '/media/google.svg';
+  googleIcon.src = logoGoogle;
   googleIcon.alt = 'Google icon';
   googleIcon.className = 'google-icon';
   googleButton.appendChild(googleIcon);
