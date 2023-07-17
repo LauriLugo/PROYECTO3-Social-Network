@@ -334,6 +334,7 @@ footer > p {
   width: 98%;
   height: 65%;
 }
+
 #post-container{
   display: flex;
   flex-direction: column;
