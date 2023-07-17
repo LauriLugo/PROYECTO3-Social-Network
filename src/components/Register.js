@@ -66,27 +66,22 @@ export const Register = (onNavigate) => {
     e.preventDefault();
     crearUsuarioConCorreoYContraseña(emailInput.value, passwordInput.value)
       .then((userCredential, error) => {
-        // localStorage.setItem('user', user);
-        if (emailInput.value === '' || passwordInput.value === '') {
-          showMessage('Por favor, completa todos los campos');
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
-        } else {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
         // Signed in
-          const user = userCredential.user;
+        const user = userCredential.user;
 
-          onNavigate('/');
-          // ...
-          console.log(user);
-        }
+        onNavigate('/wall');
+        // ...
+        console.log(user);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
         if (emailInput.value === '' || passwordInput.value === '') {
-          showMessage('Por favor, llena todos los campos');
+          showMessage('Por favor, completa todos los campos');
         } else {
           if (errorCode === 'auth/invalid-email') showMessage('Ingresa un correo');
           if (errorCode === 'auth/invalid-password') showMessage('Escribe tu contraseña');
@@ -121,6 +116,7 @@ export const Register = (onNavigate) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
+        if (errorCode) showMessage('Se encontró un error, intenta más tarde');
         // The email of the user's account used.
         const email = error.customData.email;
         // The AuthCredential type that was used.

@@ -21,14 +21,6 @@ export const Wall = (onNavigate) => {
     onNavigate('/');
     return null;
   }
-  const HomeDiv = document.createElement('div');
-  const buttonLogin = document.createElement('button');
-
-  buttonLogin.textContent = 'Inicia sesión';
-
-  buttonLogin.addEventListener('click', () => onNavigate('/login'));
-
-  HomeDiv.appendChild(buttonLogin);
 
   const wrapper = document.createElement('div');
   wrapper.className = 'wall-wrapper';
@@ -37,7 +29,7 @@ export const Wall = (onNavigate) => {
   formPost.className = 'form-post';
 
   const welcomeMessage = document.createElement('h2');
-  welcomeMessage.textContent = 'Hola, usuario';
+  welcomeMessage.textContent = '¡Hola!';
 
   const questionForm = document.createElement('p');
   questionForm.textContent = '¿Cómo te sientes hoy?';
@@ -217,7 +209,6 @@ export const Wall = (onNavigate) => {
   navBar.className = 'nav-bar';
 
   // We proceed then to create the icon containers for the icon images.
-
   const profileIconContainer = document.createElement('picture');
   profileIconContainer.className = 'icon-container';
   profileIconContainer.addEventListener('click', () => {

@@ -5,14 +5,7 @@ import logoSrc from '../media/logo.png';
 import disclaimerSrc from '../media/disclaimer.png';
 import logoGoogle from '../media/google.svg';
 
-// Your web app's Firebase configuration
-
-export const Home = (onNavigate) => {
-  // if (localStorage.getItem('user') !== null) onNavigate('/wall');
-  const buttonLogin = document.createElement('button');
-  buttonLogin.textContent = 'Inicia sesión';
-  buttonLogin.addEventListener('click', () => onNavigate('/register'));
-
+export const Login = (onNavigate) => {
   // create the main wrapper that includes the logo and the container
   // for the introductory text and the form
   const mainWrapper = document.createElement('div');
@@ -109,12 +102,11 @@ export const Home = (onNavigate) => {
   const nextButton = document.createElement('a');
   nextButton.href = '';
   nextButton.className = 'continue';
-  // nextButton.onclick = routes;
   nextButton.textContent = 'Siguiente';
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
     if (emailInput.value === '' && passwordInput.value === '') {
-      showMessage('Por favor completa todos los campos');
+      showMessage('Por favor, completa todos los campos');
     } else {
       iniciaSesionConCorreoYContraseña(emailInput.value, passwordInput.value)
         .then((userCredential) => {

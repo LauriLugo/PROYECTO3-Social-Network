@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app'; //
+import { initializeApp } from 'firebase/app';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -8,7 +8,7 @@ import {
 } from 'firebase/auth';
 
 import {
-  getFirestore,
+  getFirstore,
   collection,
   addDoc,
   getDocs,
