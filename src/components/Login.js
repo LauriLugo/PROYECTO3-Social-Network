@@ -5,7 +5,7 @@ import logoSrc from '../media/logo.png';
 import disclaimerSrc from '../media/disclaimer.png';
 import logoGoogle from '../media/google.svg';
 
-export const Home = (onNavigate) => {
+export const Login = (onNavigate) => {
   // create the main wrapper that includes the logo and the container
   // for the introductory text and the form
   const mainWrapper = document.createElement('div');
@@ -157,6 +157,9 @@ export const Home = (onNavigate) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         if (errorCode) showMessage('Se encontró un error, intenta más tarde');
+        // The email of the user's account used.
+        // const email = error.customData.email;
+        // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log(credential, error, errorMessage);
         // ...

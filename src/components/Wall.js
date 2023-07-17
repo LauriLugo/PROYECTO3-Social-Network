@@ -29,7 +29,7 @@ export const Wall = (onNavigate) => {
   formPost.className = 'form-post';
 
   const welcomeMessage = document.createElement('h2');
-  welcomeMessage.textContent = 'Hola, usuario';
+  welcomeMessage.textContent = '¡Hola!';
 
   const questionForm = document.createElement('p');
   questionForm.textContent = '¿Cómo te sientes hoy?';

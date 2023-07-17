@@ -1,4 +1,4 @@
-import { Home } from './components/Home.js';
+import { Login } from './components/Login.js';
 import { Register } from './components/Register.js';
 import { Wall } from './components/Wall.js';
 import { Profile } from './components/Profile.js';
@@ -7,7 +7,7 @@ const rootDiv = document.getElementById('root');
 
 const routes = {
   404: './404.html',
-  '/': Home,
+  '/': Login,
   '/register': Register,
   '/wall': Wall,
   '/profile': Profile,

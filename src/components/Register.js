@@ -72,7 +72,7 @@ export const Register = (onNavigate) => {
         // Signed in
         const user = userCredential.user;
 
-        onNavigate('/');
+        onNavigate('/wall');
         // ...
         console.log(user);
       })
@@ -116,6 +116,7 @@ export const Register = (onNavigate) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
+        if (errorCode) showMessage('Se encontró un error, intenta más tarde');
         // The email of the user's account used.
         const email = error.customData.email;
         // The AuthCredential type that was used.
