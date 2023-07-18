@@ -1,15 +1,11 @@
 import { GoogleAuthProvider } from 'firebase/auth';
 import { iniciaSesionConCorreoYContraseña, iniciaSesionConPopup } from '../lib';
+import { showMessage } from './Modal';
 import logoSrc from '../media/logo.png';
 import disclaimerSrc from '../media/disclaimer.png';
+import logoGoogle from '../media/google.svg';
 
-// Your web app's Firebase configuration
-
-export const Home = (onNavigate) => {
-  const buttonLogin = document.createElement('button');
-  buttonLogin.textContent = 'Inicia sesión';
-  buttonLogin.addEventListener('click', () => onNavigate('/register'));
-
+export const Login = (onNavigate) => {
   // create the main wrapper that includes the logo and the container
   // for the introductory text and the form
   const mainWrapper = document.createElement('div');
@@ -106,27 +102,29 @@ export const Home = (onNavigate) => {
   const nextButton = document.createElement('a');
   nextButton.href = '';
   nextButton.className = 'continue';
-  // nextButton.onclick = routes;
   nextButton.textContent = 'Siguiente';
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
-    iniciaSesionConCorreoYContraseña(emailInput.value, passwordInput.value)
-      .then((userCredential) => {
-        // Signed in
-        // const user = userCredential.user;
-        onNavigate('/wall');
-        // ...
-        console.log(userCredential);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage, 'error custom');
-        if (errorCode === 'auth/invalid-email') alert('Correo incorrecto');
-        if (errorCode === 'auth/missing-password') alert('Escribe tu contraseña');
-        if (errorCode === 'auth/wrong-password') alert('Contraseña incorrecta');
-        if (errorCode === 'auth/user-not-found') alert('Usuario no registrado');
-      });
+    if (emailInput.value === '' && passwordInput.value === '') {
+      showMessage('Por favor, completa todos los campos');
+    } else {
+      iniciaSesionConCorreoYContraseña(emailInput.value, passwordInput.value)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          localStorage.setItem('user', user.email);
+          onNavigate('/wall');
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage, 'error custom');
+          if (errorCode === 'auth/invalid-email') showMessage('Correo incorrecto');
+          if (errorCode === 'auth/missing-password') showMessage('Escribe tu contraseña');
+          if (errorCode === 'auth/wrong-password') showMessage('Contraseña incorrecta');
+          if (errorCode === 'auth/user-not-found') showMessage('Usuario no registrado');
+        });
+    }
   });
 
   // Create google container, that way we can center the button
@@ -140,26 +138,28 @@ export const Home = (onNavigate) => {
 
   // Create the Google icon image
   const googleIcon = document.createElement('img');
-  googleIcon.src = '/media/google.svg';
+  googleIcon.src = logoGoogle;
   googleIcon.alt = 'Google icon';
   googleIcon.className = 'google-icon';
   googleButton.appendChild(googleIcon);
   googleButton.addEventListener('click', (e) => {
     e.preventDefault();
     iniciaSesionConPopup()
-      .then((result) => {
+      .then((userCredential) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        console.log(result);
+        const user = userCredential.user;
+        localStorage.setItem('user', user.email);
         onNavigate('/wall');
       }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
+        if (errorCode) showMessage('Se encontró un error, intenta más tarde');
         // The email of the user's account used.
-        const email = error.customData.email;
+        // const email = error.customData.email;
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(errorCode, errorMessage, email, credential);
+        console.log(credential, error, errorMessage);
         // ...
       });
   });

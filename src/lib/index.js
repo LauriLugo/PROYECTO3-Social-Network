@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app'; //
+import { initializeApp } from 'firebase/app';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -60,5 +60,3 @@ export const updatePost = async (id, post) => updateDoc(doc(db, 'posts', id), {
 export const likePost = async (id, like) => updateDoc(doc(db, 'posts', id), {
   likes: [...new Set([...like])],
 });
-
-console.log(app);

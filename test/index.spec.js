@@ -1,9 +1,3 @@
-/* eslint-disable no-labels */
-// import {
-//   addDoc,
-//   // getDocs,
-//   // collection,
-// } from 'firebase/firestore';
 import {
   crearUsuarioConCorreoYContraseña,
   iniciaSesionConCorreoYContraseña,

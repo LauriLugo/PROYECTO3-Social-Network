@@ -1,5 +1,8 @@
 import logoSrc from '../media/logo.png';
+import backButton from '../media/back-one.svg';
 import { iniciaSesionConPopup, crearUsuarioConCorreoYContraseña } from '../lib';
+import { showMessage } from './Modal';
+import logoGoogle from '../media/google.svg';
 
 export const Register = (onNavigate) => {
   // create the main wrapper that includes the logo and the container
@@ -25,10 +28,15 @@ export const Register = (onNavigate) => {
   loginForm.className = 'login-section';
 
   // Create "Home" button
-  const buttonHome = document.createElement('a');
-  buttonHome.className = 'home-button';
-  buttonHome.textContent = 'Volver';
+  const buttonHome = document.createElement('button');
+  buttonHome.className = 'back-button';
   buttonHome.addEventListener('click', () => onNavigate('/'));
+
+  const buttomHomeIcon = document.createElement('img');
+  buttomHomeIcon.alt = 'Volver';
+  buttomHomeIcon.src = backButton;
+
+  buttonHome.appendChild(buttomHomeIcon);
 
   loginForm.appendChild(buttonHome);
 
@@ -57,10 +65,14 @@ export const Register = (onNavigate) => {
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
     crearUsuarioConCorreoYContraseña(emailInput.value, passwordInput.value)
-      .then((userCredential) => {
+      .then((userCredential, error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
         // Signed in
         const user = userCredential.user;
-        onNavigate('/');
+
+        onNavigate('/wall');
         // ...
         console.log(user);
       })
@@ -68,10 +80,13 @@ export const Register = (onNavigate) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        if (errorCode === 'auth/invalid-email') alert('Correo incorrecto');
-        if (errorCode === 'auth/missing-password') alert('Escribe tu contraseña');
-        if (errorCode === 'auth/weak-password') alert('La contraseña debe tener al menos 6 caracteres');
-        // ..
+        if (emailInput.value === '' || passwordInput.value === '') {
+          showMessage('Por favor, completa todos los campos');
+        } else {
+          if (errorCode === 'auth/invalid-email') showMessage('Ingresa un correo');
+          if (errorCode === 'auth/invalid-password') showMessage('Escribe tu contraseña');
+          if (errorCode === 'auth/weak-password') showMessage('La contraseña debe tener al menos 6 caracteres');
+        }
       });
   });
 
@@ -86,7 +101,7 @@ export const Register = (onNavigate) => {
 
   // Create the Google icon image
   const googleIcon = document.createElement('img');
-  googleIcon.src = '/media/google.svg';
+  googleIcon.src = logoGoogle;
   googleIcon.alt = 'Google icon';
   googleIcon.className = 'google-icon';
   googleButton.appendChild(googleIcon);
@@ -101,6 +116,7 @@ export const Register = (onNavigate) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
+        if (errorCode) showMessage('Se encontró un error, intenta más tarde');
         // The email of the user's account used.
         const email = error.customData.email;
         // The AuthCredential type that was used.

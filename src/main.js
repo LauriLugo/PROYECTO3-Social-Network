@@ -1,14 +1,16 @@
-import { Home } from './components/Home.js';
+import { Login } from './components/Login.js';
 import { Register } from './components/Register.js';
 import { Wall } from './components/Wall.js';
+import { Profile } from './components/Profile.js';
 
 const rootDiv = document.getElementById('root'); // busca información desde el html a travez del "document" utilizando el metodo getElementById.
 
 const routes = {
   404: './404.html',
-  '/': Home,
+  '/': Login,
   '/register': Register,
   '/wall': Wall,
+  '/profile': Profile,
 };
 
 export const onNavigate = (pathname) => {
