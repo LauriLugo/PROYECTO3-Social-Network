@@ -114,8 +114,6 @@ export const Login = (onNavigate) => {
           const user = userCredential.user;
           localStorage.setItem('user', user.email);
           onNavigate('/wall');
-          // ...
-          console.log(userCredential);
         })
         .catch((error) => {
           const errorCode = error.code;
