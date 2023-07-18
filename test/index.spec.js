@@ -1,4 +1,3 @@
-/* eslint-disable no-labels */
 import {
   crearUsuarioConCorreoYContraseña,
   iniciaSesionConCorreoYContraseña,
