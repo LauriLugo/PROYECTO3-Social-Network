@@ -27,7 +27,7 @@ _"Nanai"_, una Red Social enfocada en promover la salud mental, da respuesta a e
 Inicialmente se implementó un [*formulario virtual*](https://docs.google.com/forms/d/1dTSggcu8N7ssEiBhRwln_lIFkjWUA64KnBUtJI3jAJI/ "formulario virtual") como herramienta de investigación diligenciado por veintiocho (28) personas, de las cuales, el 92,6% consideraron muy útil el desarrollo e implementación de una Red Social que promueva la salud mental.
 
 <p align="center">
-  <img src="https://github.com/LauriLugo/DEV007-social-network/assets/129604876/0d3c2433-b6e3-4110-a2b4-82606247b8b9"
+  <img src="https://github.com/LauriLugo/PROYECTO3-Social-Network/assets/129604876/bec16ae4-104f-4aee-b114-29a4d1892c23"
 ">
 </p>
 
@@ -140,12 +140,12 @@ Una vez definidas las _Historias de Usuario_, y como primer paso en el diseño d
 
 + Vista móvil
 <p align="center">
-  <img src="https://github.com/LauriLugo/DEV007-social-network/assets/129604876/73ecdceb-7204-4f36-9f22-faa764e0bda2" alt="Prototipo de baja fidelidad - Movil">
+  <img src="https://github.com/LauriLugo/PROYECTO3-Social-Network/assets/129604876/b6eaf77f-cc0c-469d-9eef-37b566d0f646" alt="Prototipo de baja fidelidad - Movil">
 </p>
 
 + Vista desktop
 <p align="center">
-  <img src="https://github.com/LauriLugo/DEV007-social-network/assets/129604876/a006f054-78ea-457f-9b94-a683d78d1be5" alt="Prototipo de baja fidelidad - Desktop">
+  <img src="https://github.com/LauriLugo/PROYECTO3-Social-Network/assets/129604876/d1891a63-dce9-4b76-9a80-f2b222db730a" alt="Prototipo de baja fidelidad - Desktop">
 </p>
 
 ### _Prototipo de alta fidelidad_
@@ -154,20 +154,19 @@ Seguidamente se diseñó la _Interfaz de Usuario_ también mediante la herramien
 
 + Vista móvil
 <p align="center">
-  <img src="https://github.com/LauriLugo/DEV007-social-network/assets/129604876/b3b4f081-f9c9-4dc1-b1e3-13f0970db7ee" alt="Prototipo de alta fidelidad - Movil">
+  <img src="https://github.com/LauriLugo/PROYECTO3-Social-Network/assets/129604876/971c51a1-006a-463c-a00b-30474516db1b" alt="Prototipo de alta fidelidad - Movil">
 </p>
 
 + Vista desktop
 <p align="center">
-  <img src="https://github.com/LauriLugo/DEV007-social-network/assets/129604876/5e7cadb3-b270-45c4-a59a-dfbfccdef32b" alt="Prototipo de alta fidelidad - Desktop">
+  <img src="https://github.com/LauriLugo/PROYECTO3-Social-Network/assets/129604876/fd0f3c9e-6ddf-4f01-b9df-f13bf7a68fb9" alt="Prototipo de alta fidelidad - Desktop">
 </p>
 
 ## 3. Consideraciones generales
 
 La lógica de este proyecto está implementada completamente en JavaScript (ES6+), HTML y CSS; en ningun momento se utilizaron _frameworks_ o librerías de CSS y JS.
 
-Se implementó la herramienta [Vite](https://es.vitejs.dev/) para empaquetar los módulos y arrancar el servidor de desarrollo, el cual provee los archivos utilizando
-la estrategia `Hot Module Replacement`[(HMR)](https://es.vitejs.dev/guide/features.html#hot-module-replacement), esto permite que cuando se hagan cambios en los archivos que estén siendo servidos, el navegador automáticamente se actualizará sin tener que refrescar y volver a cargar todo el sitio. 
+Se implementó la herramienta [Vite](https://es.vitejs.dev/) para empaquetar los módulos y arrancar el servidor de desarrollo, el cual provee los archivos utilizando la estrategia `Hot Module Replacement`[(HMR)](https://es.vitejs.dev/guide/features.html#hot-module-replacement), esto permite que cuando se hagan cambios en los archivos que estén siendo servidos, el navegador automáticamente se actualizará sin tener que refrescar y volver a cargar todo el sitio. 
 
 Para la creación de la cuenta del usuario e inicio de sesión se utilizó [Firebase](https://firebase.google.com/products/database/) como servicio externo para la persistencia de datos; esta plataforma facilita la creación de las cuentas de acceso y autenticación con correo y contraseña, así como también con cuentas de Google. En esta fase, se permite solamente el acceso a usuarios con cuentas y correos electrónicos válidos; no se permiten usuarios repetidos y no permite la legibilidad en el campo de la contraseña. Si hay errores, se muestran mensajes descriptivos para ayudar al usuario a corregirlos.
 
